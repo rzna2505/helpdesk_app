@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detail_page.dart';
+import 'dashboard_page.dart'; // Pastikan import dashboard ada
+import 'qr_scanner_page.dart';
 
 class OperationPage extends StatelessWidget {
   const OperationPage({super.key});
@@ -7,7 +9,7 @@ class OperationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100], // Background kelabu sangat cair
+      backgroundColor: Colors.grey[100],
       body: Column(
         children: [
           // --- HEADER SECTION ---
@@ -48,7 +50,6 @@ class OperationPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 25),
-                // Search Bar Moden
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Container(
@@ -94,7 +95,7 @@ class OperationPage extends StatelessWidget {
                   name: 'SITI SARADATUL HUSNA BINTI ISHAK',
                   department: 'BAHAGIAN KEWANGAN & AKAUN',
                   description:
-                      'Wakil Aset RADIO: Encik Shukhairman/Puan Azlina Zakaria mohon mengemaskini No Invois & DO set komputer ....',
+                      'Wakil Aset RADIO: Encik Shukhairman/Puan Azlina Zakaria mohon mengemaskini No Invois & DO set komputer',
                 ),
                 const SizedBox(height: 18),
                 _buildOperationCard(
@@ -110,8 +111,7 @@ class OperationPage extends StatelessWidget {
               ],
             ),
           ),
-
-          // --- BOTTOM NAV BAR ---
+          // --- BOTTOM NAV BAR  ---
           Container(
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
@@ -127,9 +127,24 @@ class OperationPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(Icons.home_filled, "Home", true),
-                _buildQRItem(),
-                _buildNavItem(Icons.list_alt_rounded, "Options", false),
+                // Home Page (Klik untuk ke Dashboard)
+                _buildNavItem(
+                  context,
+                  Icons.home_outlined,
+                  "Home",
+                  false,
+                  destination: const DashboardPage(),
+                ),
+
+                _buildQRItem(context),
+
+                _buildNavItem(
+                  context,
+                  Icons.list_alt_rounded,
+                  "Options",
+                  false,
+                  destination: null,
+                ),
               ],
             ),
           ),
@@ -138,7 +153,7 @@ class OperationPage extends StatelessWidget {
     );
   }
 
-  // Helper Card yang lebih kemas
+  // --- HELPER CARD ---
   Widget _buildOperationCard(
     BuildContext context, {
     required String type,
@@ -167,7 +182,6 @@ class OperationPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Row Atas (Chips)
             Padding(
               padding: const EdgeInsets.all(12),
               child: Row(
@@ -178,7 +192,6 @@ class OperationPage extends StatelessWidget {
                 ],
               ),
             ),
-            // Profile Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
@@ -220,7 +233,6 @@ class OperationPage extends StatelessWidget {
                 ],
               ),
             ),
-            // Description Box
             Container(
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(12),
@@ -246,10 +258,9 @@ class OperationPage extends StatelessWidget {
     );
   }
 
-  // Custom Chip Widget
   Widget _buildChip(String label, Color bg, Color text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 13),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(10),
@@ -265,44 +276,77 @@ class OperationPage extends StatelessWidget {
     );
   }
 
-  // Nav Item Widget
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          size: 28,
-          color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
+  // --- HELPER NAV ITEM DENGAN NAVIGASI ---
+  Widget _buildNavItem(
+    BuildContext context,
+    IconData icon,
+    String label,
+    bool isActive, {
+    Widget? destination,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        if (destination != null && !isActive) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 30,
             color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
           ),
-        ),
-      ],
-    );
-  }
-
-  // QR Button Floating style
-  Widget _buildQRItem() {
-    return Container(
-      transform: Matrix4.translationValues(0, -5, 0),
-      padding: const EdgeInsets.all(12),
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(0, 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            ),
           ),
         ],
       ),
-      child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
+    );
+  }
+
+  Widget _buildQRItem(BuildContext context) {
+    // Tambah context kat sini
+    return GestureDetector(
+      onTap: () async {
+        // Buka kamera dan tunggu result
+        final String? qrResult = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const QRScannerPage()),
+        );
+
+        // Kalau ada data dari QR, buat sesuatu (contoh: keluar alert)
+        if (qrResult != null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Hasil Scan: $qrResult')));
+        }
+      },
+      child: Container(
+        transform: Matrix4.translationValues(0, -5, 0),
+        padding: const EdgeInsets.all(12),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
+      ),
     );
   }
 }

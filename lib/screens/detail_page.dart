@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dashboard_page.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key});
@@ -171,7 +172,7 @@ class DetailPage extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black54,
+                            color: Colors.black87,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -231,7 +232,7 @@ class DetailPage extends StatelessWidget {
               children: [
                 _buildNavItem(Icons.home_outlined, "Home", false),
                 _buildQRItem(),
-                _buildNavItem(Icons.list_alt_rounded, "Options", true),
+                _buildNavItem(Icons.list_alt_rounded, "Options", false),
               ],
             ),
           ),
