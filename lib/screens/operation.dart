@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'detail_page.dart';
 import 'dashboard_page.dart'; // Pastikan import dashboard ada
+<<<<<<< HEAD
 import 'qr_scanner_page.dart';
+=======
+>>>>>>> f95082f2b7ae8cd7af709b94cf3871a5be907a9e
 
 class OperationPage extends StatelessWidget {
   const OperationPage({super.key});
@@ -136,7 +139,11 @@ class OperationPage extends StatelessWidget {
                   destination: const DashboardPage(),
                 ),
 
+<<<<<<< HEAD
                 _buildQRItem(context),
+=======
+                _buildQRItem(),
+>>>>>>> f95082f2b7ae8cd7af709b94cf3871a5be907a9e
 
                 _buildNavItem(
                   context,
@@ -308,6 +315,27 @@ class OperationPage extends StatelessWidget {
               color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
+<<<<<<< HEAD
+=======
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQRItem() {
+    return Container(
+      transform: Matrix4.translationValues(0, -5, 0),
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+>>>>>>> f95082f2b7ae8cd7af709b94cf3871a5be907a9e
           ),
         ],
       ),
