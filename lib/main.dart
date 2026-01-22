@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:helpdesk_app/screens/comment_page.dart';
 import 'package:helpdesk_app/screens/dashboard_page.dart';
-import 'screens/login_page.dart'; //import floder screen and login_page file
-//import 'screens/login_page.dart'; //import folder screen and login_page file
+import 'package:helpdesk_app/screens/operation.dart';
+import 'screens/login_page.dart'; 
 import 'screens/forgot_page.dart'; 
 import 'package:device_preview/device_preview.dart';//import folder screen and forgot_page file
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'HelpDesk App',
 
       // FIRST PAGE
-      initialRoute: '/Dashboard-Page' ,
+      initialRoute: '/Operation-Page' ,
 
       // ALL ROUTES
       routes: {
@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/forgot-password' : (context) => const ForgotPasswordPage(),
         '/Comment-Page' : (context) => const CommentPage(),
         '/Dashboard-Page' : (context) => const DashboardPage(),
+        '/Operation-Page' : (context) => const OperationPage(),
       },
       theme: ThemeData(
         primaryColor: const Color(0xFF00AEEF),
@@ -52,8 +53,10 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      //home: const LoginPage(),
+      //home: const OperationPage(),
       //home: const CommentPage(),
+      home: const OperationPage(),
     );
   }
 }
