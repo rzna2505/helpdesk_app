@@ -15,7 +15,9 @@ class DashboardPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: size.height - MediaQuery.of(context).padding.top),
+          constraints: BoxConstraints(
+            minHeight: size.height - MediaQuery.of(context).padding.top,
+          ),
           child: IntrinsicHeight(
             child: Column(
               children: [
@@ -56,12 +58,19 @@ class DashboardPage extends StatelessWidget {
                           CircleAvatar(
                             radius: avatarRadius,
                             backgroundColor: Colors.black,
-                            child: Icon(Icons.person, color: Colors.white, size: avatarRadius),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: avatarRadius,
+                            ),
                           ),
                           SizedBox(width: size.width * 0.03),
                           Text(
                             'Hi Syana, today you check in at \n11:49:25 AM',
-                            style: TextStyle(color: Colors.black, fontSize: size.width * 0.035),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: size.width * 0.035,
+                            ),
                           ),
                         ],
                       ),
@@ -85,25 +94,28 @@ class DashboardPage extends StatelessWidget {
                         child: Text(
                           'You finished 0 job today.\nWork Harder!!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.black, fontSize: size.width * 0.055),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: size.width * 0.055,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-      
+
                 SizedBox(height: spacing),
-      
-                // ---------------- MAIN CONTENT (VERTICAL CENTER) ----------------
+
+                // ---------------- MAIN CONTENT ----------------
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // TASK SECTION
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                        // --TASK CONTAINER--
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.05,
+                        ),
                         child: Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(size.width * 0.05),
@@ -119,7 +131,6 @@ class DashboardPage extends StatelessWidget {
                             ],
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'TASK',
@@ -130,24 +141,29 @@ class DashboardPage extends StatelessWidget {
                               ),
                               SizedBox(height: spacing * 0.5),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  _taskItem(Icons.report, 'Complaints', 2, Colors.red, avatarRadius),
-                                  _taskItem(Icons.print, 'Operation', 0, Colors.blue, avatarRadius),
-                                  _taskItem(Icons.settings, 'PM', 6, Colors.green, avatarRadius),
+                                  _taskItem(Icons.report, 'Complaints', 2,
+                                      Colors.red, avatarRadius),
+                                  _taskItem(Icons.print, 'Operation', 0,
+                                      Colors.blue, avatarRadius),
+                                  _taskItem(Icons.settings, 'PM', 6,
+                                      Colors.green, avatarRadius),
                                 ],
                               ),
                             ],
                           ),
                         ),
                       ),
-      
+
                       SizedBox(height: spacing),
-      
+
                       // SHIFT SCHEDULE
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                        // --SS CONTAINER--
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.05,
+                        ),
                         child: Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(size.width * 0.05),
@@ -163,7 +179,6 @@ class DashboardPage extends StatelessWidget {
                             ],
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 'SHIFT SCHEDULE',
@@ -174,11 +189,15 @@ class DashboardPage extends StatelessWidget {
                               ),
                               SizedBox(height: spacing * 0.5),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  _shiftCard('14 Jan', 'Morning', Colors.red, shiftRadius, size),
-                                  _shiftCard('15 Jan', 'Morning', Colors.red, shiftRadius, size),
-                                  _shiftCard('16 Jan', 'Afternoon', Colors.green, shiftRadius, size),
+                                  _shiftCard('14 Jan', 'Morning', Colors.red,
+                                      shiftRadius, size),
+                                  _shiftCard('15 Jan', 'Morning', Colors.red,
+                                      shiftRadius, size),
+                                  _shiftCard('16 Jan', 'Afternoon', Colors.green,
+                                      shiftRadius, size),
                                 ],
                               ),
                             ],
@@ -188,27 +207,30 @@ class DashboardPage extends StatelessWidget {
                     ],
                   ),
                 ),
-      
-                // ---------------- BOTTOM NAVIGATION ----------------
+
+                // ---------------- BOTTOM NAV ----------------
                 Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(color: Colors.grey[300]!)),
+                  height: 60,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, -2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildNavItem(context, Icons.home_filled, "Home", true),
+                      _buildQRItem(),
+                      _buildNavItem(context, Icons.list_alt_rounded, "Options", false),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Icon(Icons.home, size: 50, color: Colors.grey),
-                    const Icon(
-                      Icons.qr_code_scanner,
-                      size: 55,
-                      color: Colors.black,
-                    ), // Ikon QR
-                    const Icon(Icons.list_alt, size: 50, color: Colors.grey),
-                  ],
-                ),
-              ),
               ],
             ),
           ),
@@ -218,7 +240,9 @@ class DashboardPage extends StatelessWidget {
   }
 
   // ---------------- HELPER FUNCTIONS ----------------
-  static Widget _taskItem(IconData icon, String title, int badge, Color color, double radius) {
+
+  static Widget _taskItem(
+      IconData icon, String title, int badge, Color color, double radius) {
     return Column(
       children: [
         Stack(
@@ -241,7 +265,8 @@ class DashboardPage extends StatelessWidget {
                   ),
                   child: Text(
                     '$badge',
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    style:
+                        const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ),
@@ -253,7 +278,8 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  static Widget _shiftCard(String date, String shift, Color color, double radius, Size size) {
+  static Widget _shiftCard(String date, String shift, Color color,
+      double radius, Size size) {
     return Container(
       padding: EdgeInsets.all(size.width * 0.04),
       decoration: BoxDecoration(
@@ -272,11 +298,71 @@ class DashboardPage extends StatelessWidget {
             backgroundColor: color,
             child: Text(
               shift,
-              style: TextStyle(color: Colors.white, fontSize: size.width * 0.03),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: size.width * 0.03,
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  // -------- SAME AS OPERATION PAGE --------
+   Widget _buildNavItem(
+    BuildContext context,
+    IconData icon,
+    String label,
+    bool isActive, {
+    Widget? destination,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        if (destination != null && !isActive) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 30,
+            color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQRItem() {
+    return Container(
+      transform: Matrix4.translationValues(0, 7, 0),
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
     );
   }
 }

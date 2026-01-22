@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'HelpDesk App',
 
       // FIRST PAGE
-      initialRoute: '/Operation-Page' ,
+      initialRoute: '/Dashboard-Page' ,
 
       // ALL ROUTES
       routes: {
