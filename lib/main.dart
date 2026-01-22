@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/login_page.dart'; //import floder screen and login_page file
+import 'screens/login_page.dart'; //import folder screen and login_page file
+import 'screens/forgot_page.dart'; //import folder screen and forgot_page file
 
 
 void main() {
@@ -15,6 +16,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'HelpDesk App',
+
+      // FIRST PAGE
+      initialRoute: '/login',
+
+      // ALL ROUTES
+      routes: {
+        '/login' : (context) => const LoginPage(),
+        '/forgot-password' : (context) => const ForgotPasswordPage(),
+      },
       theme: ThemeData(
         primaryColor: const Color(0xFF00AEEF),
         // This is the theme of your application.
