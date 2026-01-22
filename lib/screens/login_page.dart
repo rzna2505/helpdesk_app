@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            // 🔹 CONTENT UTAMA
+            // CONTENT UTAMA
             Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -100,8 +100,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const Text('Remember me'),
                         const Spacer(),
+
+                        //NAVIGATE TO FORGOT PAGE
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/forgot-password');
+                          },
                           child: const Text('Forgot Password?'),
                         ),
                       ],
@@ -136,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            // 🔹 LOGO TOP LEFT
+            // LOGO TOP LEFT
             Positioned(
               top: 10,
               left: 10,
@@ -144,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Image.asset(
                     'assets/images/bernama_logo.webp',
-                    height: 40,
+                    height: 50,
                   ),
                   const SizedBox(width: 8),
                   const Text(

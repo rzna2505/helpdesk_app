@@ -15,6 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'HelpDesk App',
+
+      // FIRST PAGE
+      initialRoute: '/login',
+
+      // ALL ROUTES
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/forgot-password': (context) => const ForgotPasswordPage(),
+      },
       theme: ThemeData(
         primaryColor: const Color(0xFF00AEEF),
         // This is the theme of your application.
@@ -35,7 +44,6 @@ class MyApp extends StatelessWidget {
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const LoginPage(),
-      //home: const CommentPage(),
     );
   }
 }
