@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'HelpDesk App',
 
       // FIRST PAGE
-      initialRoute: '/login',
+      initialRoute: '/Comment-Page',
 
       // ALL ROUTES
       //routes: {
