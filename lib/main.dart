@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:helpdesk_app/screens/comment_page.dart';
 import 'screens/login_page.dart'; //import floder screen and login_page file
-<<<<<<< HEAD
-=======
-import 'screens/login_page.dart'; //import folder screen and login_page file
 import 'screens/forgot_page.dart'; //import folder screen and forgot_page file
->>>>>>> 72d085e8b98d0274d671d9748a543e0a6a7b0607
+import 'screens/comment_page.dart'; //import folder screen and comment_page file
+import 'screens/operation.dart'; //import folder screen and operation file
 
 void main() {
   runApp(const MyApp());
@@ -25,10 +23,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
 
       // ALL ROUTES
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/forgot-password': (context) => const ForgotPasswordPage(),
-      },
+      //routes: {
+      //'/login': (context) => const LoginPage(),
+      // '/forgot-password': (context) => const ForgotPasswordPage(),
+      // },
       theme: ThemeData(
         primaryColor: const Color(0xFF00AEEF),
         // This is the theme of your application.
@@ -48,7 +46,8 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      //home: const LoginPage(),
+      home: const CommentPage(),
     );
   }
 }
