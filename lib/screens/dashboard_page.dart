@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'qr_scanner_page.dart';
 import 'dashboard_page.dart'; // Kalau nak navigate balik ke dashboard
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'operation.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -155,9 +156,16 @@ class DashboardPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              _taskItem(Icons.report, 'Complaints', 2, Colors.red, avatarRadius),
-                              _taskItem(Icons.print, 'Operation', 0, Colors.blue, avatarRadius),
-                              _taskItem(Icons.settings, 'PM', 6, Colors.green, avatarRadius),
+                              _taskItem(Icons.report, 'Complaints', 2, Colors.red, avatarRadius, () {
+                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintsPage()));
+                                }),
+                              _taskItem(Icons.print, 'Operation', 0, Colors.blue, avatarRadius, () {
+                                  // Navigate ke OperationPage
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const OperationPage()));
+                                }),
+                              _taskItem(Icons.settings, 'PM', 6, Colors.green, avatarRadius, () {
+                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => PMPage()));
+                                }),
                             ],
                           ),
                         ],
@@ -197,6 +205,7 @@ class DashboardPage extends StatelessWidget {
 
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -251,34 +260,41 @@ class DashboardPage extends StatelessWidget {
   }
 
   // ---------------- HELPER FUNCTIONS ----------------
-  Widget _taskItem(IconData icon, String title, int badge, Color color, double radius) {
-    return Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            CircleAvatar(
-              radius: radius,
-              backgroundColor: color,
-              child: Icon(icon, color: Colors.white, size: radius),
-            ),
-            if (badge > 0)
-              Positioned(
-                top: -5,
-                right: -5,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-                  child: Text('$badge', style: const TextStyle(color: Colors.white, fontSize: 12)),
-                ),
+  Widget _taskItem(IconData icon, String title, int badge, Color color, double radius, VoidCallback onTap) {
+  return InkWell(
+    onTap: onTap, // Fungsi ni akan dipanggil bila user tekan
+    borderRadius: BorderRadius.circular(10), // Supaya kesan tekan tu tak petak sangat
+    child: Padding(
+      padding: const EdgeInsets.all(8.0), // Tambah sikit padding supaya senang nak tekan
+      child: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              CircleAvatar(
+                radius: radius,
+                backgroundColor: color,
+                child: Icon(icon, color: Colors.white, size: radius),
               ),
-          ],
-        ),
-        SizedBox(height: radius * 0.3),
-        Text(title),
-      ],
-    );
-  }
+              if (badge > 0)
+                Positioned(
+                  top: -5,
+                  right: -5,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                    child: Text('$badge', style: const TextStyle(color: Colors.white, fontSize: 12)),
+                  ),
+                ),
+            ],
+          ),
+          SizedBox(height: radius * 0.3),
+          Text(title),
+        ],
+      ),
+    ),
+  );
+}
 
   Widget _shiftCard(String date, String shift, Color color, double radius, Size size) {
     return Container(
@@ -296,7 +312,7 @@ class DashboardPage extends StatelessWidget {
           
           Container(
             constraints: const BoxConstraints(minWidth: 70),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(20),

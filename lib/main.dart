@@ -4,6 +4,7 @@ import 'package:helpdesk_app/screens/comment_page.dart';
 import 'package:helpdesk_app/screens/dashboard_page.dart';
 import 'package:helpdesk_app/screens/operation.dart';
 import 'package:device_preview/device_preview.dart';
+import 'dart:ui';
 //import floder screen and login_page file
 //import folder screen and forgot_page file
 //import folder screen and comment_page file
@@ -20,9 +21,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      useInheritedMediaQuery: true, // DevicePreview yang lebih stabil
+      locale: DevicePreview.locale(context), 
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'HelpDesk App',
 
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown,
+        },
+      ),
       // FIRST PAGE
       initialRoute: '/Dashboard-Page',
 
@@ -49,6 +61,7 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        
       ),
       home: const OperationPage(),
       //home: const DashboardPage(),
