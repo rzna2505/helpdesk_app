@@ -1,20 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:helpdesk_app/screens/comment_page.dart';
-<<<<<<< HEAD
 import 'package:helpdesk_app/screens/operation.dart';
 import 'package:device_preview/device_preview.dart';
 //import floder screen and login_page file
 //import folder screen and forgot_page file
 //import folder screen and comment_page file
 //import folder screen and operation file
-=======
-import 'package:helpdesk_app/screens/dashboard_page.dart';
-import 'package:helpdesk_app/screens/operation.dart';
-import 'screens/login_page.dart'; 
-import 'screens/forgot_page.dart'; 
-import 'package:device_preview/device_preview.dart';//import folder screen and forgot_page file
->>>>>>> f95082f2b7ae8cd7af709b94cf3871a5be907a9e
 
 void main() {
   runApp(DevicePreview(builder: (context) => MyApp(), enabled: !kReleaseMode));
@@ -34,20 +26,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/Dashboard-Page',
 
       // ALL ROUTES
-<<<<<<< HEAD
       //routes: {
       //'/login': (context) => const LoginPage(),
       // '/forgot-password': (context) => const ForgotPasswordPage(),
       // },
-=======
-      routes: {
-        '/login' : (context) => const LoginPage(),
-        '/forgot-password' : (context) => const ForgotPasswordPage(),
-        '/Comment-Page' : (context) => const CommentPage(),
-        '/Dashboard-Page' : (context) => const DashboardPage(),
-        '/Operation-Page' : (context) => const OperationPage(),
-      },
->>>>>>> f95082f2b7ae8cd7af709b94cf3871a5be907a9e
       theme: ThemeData(
         primaryColor: const Color(0xFF00AEEF),
         // This is the theme of your application.
