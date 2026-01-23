@@ -43,7 +43,7 @@ class DetailPage extends StatelessWidget {
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: 20,
+                      size: 25,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -60,7 +60,7 @@ class DetailPage extends StatelessWidget {
                     const Text(
                       'Detail',
                       style: TextStyle(
-                        fontSize: 26, // Saiz sedang-sedang
+                        fontSize: 26, //
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
@@ -70,50 +70,49 @@ class DetailPage extends StatelessWidget {
               ],
             ),
           ),
-
+          const SizedBox(height: 20),
+          // --- CONTENT SECTION ---
+          // Ticket ID Bar
+          _buildCleanBox(
+            padding: EdgeInsets.zero,
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    status,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                const Expanded(
+                  child: Text(
+                    'L202601141050510002',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                // Ticket ID Bar
-                _buildCleanBox(
-                  padding: EdgeInsets.zero,
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          status,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                        child: Text(
-                          'L202601141050510002',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-
                 // CONTACT PERSON
                 _buildHeaderLabel("CONTACT PERSON"),
                 _buildCleanBox(
@@ -145,7 +144,7 @@ class DetailPage extends StatelessWidget {
                               department,
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 13, // Jabatan kena senang nampak
+                                fontSize: 12,
                               ),
                             ),
                             const SizedBox(height: 8),
