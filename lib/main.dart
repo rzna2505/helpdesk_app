@@ -50,9 +50,8 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      //home: const LoginPage(),
-      home: const DashboardPage(),
-      //home: const CommentPage(),
+      home: const OperationPage(),
+      //home: const DashboardPage(),
     );
   }
 }

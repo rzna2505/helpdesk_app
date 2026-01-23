@@ -73,40 +73,31 @@ class DetailPage extends StatelessWidget {
           const SizedBox(height: 20),
           // --- CONTENT SECTION ---
           // Ticket ID Bar
-          _buildCleanBox(
-            padding: EdgeInsets.zero,
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    status,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
+            Center( // Guna Center supaya box tu duduk tengah selepas dipendekkan
+            child: SizedBox(
+              width: 350, 
+              child: _buildCleanBox(
+                padding: EdgeInsets.zero,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(status, style: const TextStyle(color: Colors.white)),
                     ),
-                  ),
-                ),
-                const Expanded(
-                  child: Text(
-                    'L202601141050510002',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: Colors.black87,
+                    const Expanded( // Ini akan isi baki ruang dalam 280 tadi
+                      child: Text(
+                        'L202601141050510002',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           Expanded(
@@ -227,7 +218,7 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 18),
 
                 // LAPTOP SECTION
                 _buildCleanBox(
