@@ -10,6 +10,7 @@ class CommentPage extends StatefulWidget {
 class _CommentPageState extends State<CommentPage> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size; // dapatkan saiz skrin
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(

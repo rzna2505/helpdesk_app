@@ -67,8 +67,8 @@ class MyApp extends StatelessWidget {
         
       ),
       //home: const DetailComplaintsPage(status: '', name: '', department: '',), //initial route
-      //home: const DashboardPage(),
-      home: const PMPage(),
+      home: const DashboardPage(),
+      //home: const PMPage(),
     );
   }
 }
