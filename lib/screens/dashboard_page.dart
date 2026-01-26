@@ -171,7 +171,7 @@ class DashboardPage extends StatelessWidget {
                                 Colors.red,
                                 avatarRadius,
                                 () {
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintsPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ComplaintsPage()));
                                 },
                               ),
                               _taskItem(
@@ -198,7 +198,7 @@ class DashboardPage extends StatelessWidget {
                                 Colors.green,
                                 avatarRadius,
                                 () {
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => PMPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PMPage()));
                                 },
                               ),
                             ],
