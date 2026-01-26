@@ -208,8 +208,11 @@ class _ComplaintsState extends State<ComplaintsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                DetailPage(status: status, name: name, department: department),
+            builder: (context) => DetailComplaintsPage(
+              status: status,
+              name: name,
+              department: department,
+            ),
           ),
         );
       },
