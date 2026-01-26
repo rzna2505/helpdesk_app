@@ -60,9 +60,8 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      //home: const DetailComplaintsPage(status: '', name: '', department: '',), //initial route
       home: const DashboardPage(),
-      //home: const PMPage(),
+      //home: const CommentPage(status: 'new'),
     );
   }
 }

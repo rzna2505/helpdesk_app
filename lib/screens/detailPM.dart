@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'qr_scanner_page.dart';
 import 'dashboard_page.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPMPage extends StatefulWidget {
   final String status;
   final String name;
   final String department;
 
-  const DetailPage({
+  const DetailPMPage({
     super.key,
     required this.status,
     required this.name,
@@ -15,8 +15,18 @@ class DetailPage extends StatelessWidget {
   });
 
   @override
+  State<DetailPMPage> createState() => _DetailPMPageState();
+}
+
+class _DetailPMPageState extends State<DetailPMPage> {
+  // --- LOGIK CHECKLIST ---
+  List<Map<String, dynamic>> checklistItems = [
+    {"title": "CLEAN CPU, Monitor, Keyboard & Mouse", "isDone": false},
+    {"title": "UPDATE Antivirus", "isDone": false},
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; // dapatkan saiz skrin
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -24,45 +34,40 @@ class DetailPage extends StatelessWidget {
           // --- HEADER SECTION ---
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 50, bottom: 25),
+            padding: const EdgeInsets.only(top: 60, bottom: 40),
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF00AEEF), Color(0xFF0089BB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: Color(0xFF00AEEF),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35),
               ),
             ),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
-                      color: Colors.white,
-                      size: 30,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      onPressed: () => Navigator.pop(context),
                     ),
-                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.article_rounded,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                    const SizedBox(width: 12),
-                    const Text(
+                    Icon(Icons.article_rounded, color: Colors.white, size: 30),
+                    SizedBox(width: 15),
+                    Text(
                       'Detail',
                       style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
@@ -71,79 +76,25 @@ class DetailPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
 
-          // --- TICKET ID BAR (Logik Warna Ikut Status) ---
-          Center(
-            child: Container(
-              width: 350,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        // Logik warna: NEW = Merah, PENDING = Kuning, Lain-lain = Kelabu
-                        color: status.toUpperCase() == 'NEW'
-                            ? Colors.redAccent
-                            : (status.toUpperCase() == 'PENDING'
-                                  ? const Color.fromARGB(255, 243, 195, 72)
-                                  : Colors.grey),
-                      ),
-                      child: Text(
-                        status.toUpperCase(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'L202601141050510002',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
               children: [
-                _buildModernLabel("CONTACT PERSON"),
+                _buildTicketIdBar(),
+                const SizedBox(height: 25),
 
-                _buildCleanBox(
+                _buildModernLabel("CONTACT PERSON"),
+                _buildWhiteCard(
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 26,
-                        backgroundColor: Colors.blue.shade50,
+                      const CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Color(0xFFE0F2FE),
                         child: Icon(
                           Icons.person,
-                          color: Colors.blue.shade700,
-                          size: 30,
+                          color: Color(0xFF00AEEF),
+                          size: 35,
                         ),
                       ),
                       const SizedBox(width: 15),
@@ -152,7 +103,7 @@ class DetailPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name,
+                              widget.name,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
@@ -160,26 +111,26 @@ class DetailPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              department,
+                              widget.department,
                               style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 12,
+                                color: Colors.grey[600],
+                                fontSize: 11,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Row(
+                            const Row(
                               children: [
-                                const Icon(
-                                  Icons.phone_rounded,
+                                Icon(
+                                  Icons.phone,
                                   size: 16,
                                   color: Colors.green,
                                 ),
-                                const SizedBox(width: 6),
-                                const Text(
+                                SizedBox(width: 8),
+                                Text(
                                   "019-777 7777",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ],
@@ -190,10 +141,11 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                _buildModernLabel("TICKET INFORMATION"),
 
-                _buildCleanBox(
+                const SizedBox(height: 25),
+
+                _buildModernLabel("TICKET INFORMATION"),
+                _buildWhiteCard(
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
@@ -201,35 +153,33 @@ class DetailPage extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.all(15),
                         color: Colors.grey[200],
-                        child: Column(
+                        child: const Column(
                           children: [
                             Text(
-                              "WORK ORDER : DISMANTLE",
+                              "PM TYPE : COMPUTER SET",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                color: Colors.blueGrey.shade900,
+                                fontSize: 14,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              "START DATE : 15 JAN 2026",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            const Text(
-                              "END DATE : 15 JAN 2026",
-                              style: TextStyle(fontSize: 12),
+                            SizedBox(height: 5),
+                            Text(
+                              "END DATE : 28 JAN 2026",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(18),
+                        padding: EdgeInsets.all(20),
                         child: Text(
-                          "Wakil Aset RADIO: Encik Shukhaiman/Puan Azlina Zakaria mohon mengemaskini No.Invois & DO set komputer baharu pada Modul Perolehan (SPB) seterusnya melengkapkan rekod pengguna dan penempatan dan membuat janaan no. aset di Model Aset(SPB).",
-                          textAlign: TextAlign.justify,
+                          "Preventive Maintenance (COMPUTER SET) - MUHAMMAD MUJAHID BIN ISHAK (1255) computer yang rosak mengikut petugas berikut:",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 12,
                             height: 1.5,
                             color: Colors.black87,
                           ),
@@ -238,20 +188,21 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 18),
 
-                // LAPTOP SECTION
-                _buildCleanBox(
+                const SizedBox(height: 25),
+
+                // --- ASSET TAG (Isi Gambar 3) ---
+                _buildWhiteCard(
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
+                          horizontal: 15,
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF00AEEF),
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
                           "LAPTOP",
@@ -262,7 +213,7 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 15),
                       const Expanded(
                         child: Text(
                           "KKMM/BERNAMA/H/15/241",
@@ -275,7 +226,41 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 35),
+
+                const SizedBox(height: 25),
+
+                // --- CHECKLIST YANG BOLEH DITEKAN ---
+                _buildModernLabel("COMPUTER SET CHECKLIST"),
+                _buildWhiteCard(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: checklistItems.map((item) {
+                      return CheckboxListTile(
+                        title: Text(
+                          item['title'],
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        value: item['isDone'],
+                        activeColor: const Color(0xFF00AEEF),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        controlAffinity: ListTileControlAffinity
+                            .leading, // Letak box kat kiri macam gambar
+                        onChanged: (bool? value) {
+                          setState(() {
+                            item['isDone'] = value;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+                const SizedBox(height: 40),
 
                 ElevatedButton(
                   onPressed: () {},
@@ -283,6 +268,7 @@ class DetailPage extends StatelessWidget {
                     backgroundColor: const Color(0xFF00AEEF),
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 55),
+                    elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -292,12 +278,57 @@ class DetailPage extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
               ],
             ),
           ),
           _buildBottomNavigationBar(context),
         ],
+      ),
+    );
+  }
+
+  // --- UI HELPERS ---
+
+  Widget _buildTicketIdBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              color: widget.status.toUpperCase() == 'NEW'
+                  ? Colors.redAccent
+                  : Colors.amber,
+              child: Text(
+                widget.status.toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                '202601141050510002',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -326,21 +357,22 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCleanBox({required Widget child, EdgeInsets? padding}) {
+  Widget _buildWhiteCard({required Widget child, EdgeInsets? padding}) {
     return Container(
-      padding: padding ?? const EdgeInsets.all(15),
+      width: double.infinity,
+      padding: padding ?? const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 12,
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 15,
             offset: const Offset(0, 4),
           ),
         ],
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       child: child,
     );
   }
@@ -348,10 +380,7 @@ class DetailPage extends StatelessWidget {
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
-      ),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -359,15 +388,10 @@ class DetailPage extends StatelessWidget {
             context,
             Icons.home_outlined,
             "Home",
-            destination: const DashboardPage(),
+            const DashboardPage(),
           ),
           _buildQRItem(context),
-          _buildNavItem(
-            context,
-            Icons.list_alt_rounded,
-            "Options",
-            destination: null,
-          ),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options", null),
         ],
       ),
     );
@@ -376,22 +400,22 @@ class DetailPage extends StatelessWidget {
   Widget _buildNavItem(
     BuildContext context,
     IconData icon,
-    String label, {
-    Widget? destination,
-  }) {
+    String label,
+    Widget? dest,
+  ) {
     return InkWell(
       onTap: () {
-        if (destination != null)
+        if (dest != null)
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => destination),
+            MaterialPageRoute(builder: (context) => dest),
           );
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 28, color: Colors.grey),
-          Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+          Icon(icon, color: Colors.grey[400]),
+          Text(label, style: TextStyle(color: Colors.grey[500], fontSize: 10)),
         ],
       ),
     );
@@ -409,7 +433,7 @@ class DetailPage extends StatelessWidget {
           color: Colors.black,
           shape: BoxShape.circle,
         ),
-        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white),
       ),
     );
   }

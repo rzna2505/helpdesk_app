@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'detail_operation.dart'; // Pastikan file DetailPage anda betul
+import 'detailPM.dart';
 import 'dashboard_page.dart';
 import 'qr_scanner_page.dart';
 
