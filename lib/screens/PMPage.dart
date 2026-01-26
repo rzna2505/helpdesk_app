@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'detailComplaintsPage.dart';
+import 'detailPM.dart';
 import 'dashboard_page.dart'; // Pastikan import dashboard ada
 import 'qr_scanner_page.dart';
 
@@ -46,7 +46,6 @@ class _PMState extends State<PMPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; // dapatkan saiz skrin
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Column(
@@ -215,7 +214,7 @@ class _PMState extends State<PMPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailComplaintsPage(
+            builder: (context) => DetailPMPage(
               status: status,
               name: name,
               department: department,
@@ -310,7 +309,7 @@ class _PMState extends State<PMPage> {
                       description,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
                         color: Colors.grey[700],
                         height: 1.4,
                         fontWeight: FontWeight.w500,
@@ -336,7 +335,7 @@ class _PMState extends State<PMPage> {
                       desc1,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                         color: Colors.grey[700],
                         height: 1.4,
                         fontWeight: FontWeight.w500,
