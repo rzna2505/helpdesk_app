@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'qr_scanner_page.dart';
 import 'dashboard_page.dart';
-=======
-import 'dashboard_page.dart';
-import 'qr_scanner_page.dart';
->>>>>>> 76fa34e (jsij)
 
 class CommentPage extends StatelessWidget {
   final String status;
