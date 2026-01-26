@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         //colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const DashboardPage(),
-      //home: const CommentPage(),
+      //home: const CommentPage(status: 'new'),
     );
   }
 }

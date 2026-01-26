@@ -43,7 +43,7 @@ class DetailPage extends StatelessWidget {
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: 25,
+                      size: 30,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -72,12 +72,23 @@ class DetailPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          // --- CONTENT SECTION ---
+          // --- TICKET ID BAR (Logik Warna Ikut Status) ---
           Center(
-            child: SizedBox(
-              width: 348,
-              child: _buildCleanBox(
-                padding: EdgeInsets.zero,
+            child: Container(
+              width: 350,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
                 child: Row(
                   children: [
                     Container(
@@ -86,19 +97,29 @@ class DetailPage extends StatelessWidget {
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(0),
+                        // Logik warna: NEW = Merah, PENDING = Kuning, Lain-lain = Kelabu
+                        color: status.toUpperCase() == 'NEW'
+                            ? Colors.redAccent
+                            : (status.toUpperCase() == 'PENDING'
+                                  ? const Color.fromARGB(255, 243, 195, 72)
+                                  : Colors.grey),
                       ),
                       child: Text(
-                        status,
-                        style: const TextStyle(color: Colors.white),
+                        status.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'L202601141050510002',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
                   ],
@@ -106,7 +127,6 @@ class DetailPage extends StatelessWidget {
               ),
             ),
           ),
-
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20),
