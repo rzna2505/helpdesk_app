@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:helpdesk_app/screens/complaints.dart';
 import 'qr_scanner_page.dart';
 import 'dashboard_page.dart';
 
@@ -17,20 +16,16 @@ class DetailComplaintsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; // dapatkan saiz skrin
-    final spacing = size.height * 0.015; // responsive spacing
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7F9),
+      backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
         children: [
-          // --- HEADER SECTION ---
+          // --- HEADER SECTION MODERN ---
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(
-              top: size.height * 0.06,
-              bottom: size.height * 0.03,
-            ),
+            padding: EdgeInsets.only(top: size.height * 0.05, bottom: 25),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFF00AEEF), Color(0xFF0089BB)],
@@ -47,31 +42,24 @@ class DetailComplaintsPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: size.width * 0.06,
+                      size: 35,
                     ),
-                    onPressed: () => Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => ComplaintsPage()),
-                    ),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.article_rounded,
-                      color: Colors.white,
-                      size: size.width * 0.08,
-                    ),
-                    SizedBox(width: size.width * 0.03),
+                  children: const [
+                    Icon(Icons.description, color: Colors.white, size: 40),
+                    SizedBox(width: 10),
                     Text(
                       'Detail',
                       style: TextStyle(
-                        fontSize: size.width * 0.07,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
@@ -80,42 +68,46 @@ class DetailComplaintsPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: spacing),
+          const SizedBox(height: 20),
 
-          // --- CONTENT SECTION ---
-          // Ticket ID Bar
+          // --- TICKET ID BAR (STATUS) ---
           Center(
-            child: SizedBox(
-              width: size.width * 0.9,
-              child: _buildCleanBox(
-                padding: EdgeInsets.zero,
+            child: Container(
+              width: 350,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.04,
-                        vertical: size.height * 0.015,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(12),
+                        color: status.toUpperCase() == 'NEW'
+                            ? Colors.redAccent
+                            : (status.toUpperCase() == 'PENDING'
+                                  ? const Color.fromARGB(255, 243, 195, 72)
+                                  : Colors.grey),
                       ),
                       child: Text(
-                        status,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: size.width * 0.035,
-                        ),
+                        status.toUpperCase(),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Expanded(
                       child: Text(
                         'H202601141050510002',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: size.width * 0.04,
-                        ),
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                     ),
                   ],
@@ -123,62 +115,38 @@ class DetailComplaintsPage extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 20),
 
+          // --- CONTENT ---
           Expanded(
             child: ListView(
-              padding: EdgeInsets.all(size.width * 0.05),
+              padding: const EdgeInsets.all(20),
               children: [
-                // CONTACT PERSON
-                _buildHeaderLabel("CONTACT PERSON", size),
+                _buildModernLabel("CONTACT PERSON"),
                 _buildCleanBox(
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: size.width * 0.07,
+                        radius: 26,
                         backgroundColor: Colors.blue.shade50,
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.blue.shade700,
-                          size: size.width * 0.07,
-                        ),
+                        child: const Icon(Icons.account_circle, color: Colors.blue, size: 30),
                       ),
-                      SizedBox(width: size.width * 0.035),
+                      const SizedBox(width: 15),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.width * 0.035,
-                              ),
-                            ),
-                            SizedBox(height: spacing * 0.25),
-                            Text(
-                              department,
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: size.width * 0.033,
-                              ),
-                            ),
-                            SizedBox(height: spacing * 0.5),
+                            Text(name.toUpperCase(),
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                            Text(department.toUpperCase(),
+                                style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+                            const SizedBox(height: 8),
                             Row(
-                              children: [
-                                Icon(
-                                  Icons.phone_rounded,
-                                  size: size.width * 0.04,
-                                  color: Colors.green,
-                                ),
-                                SizedBox(width: size.width * 0.015),
-                                Text(
-                                  "019-777 7777",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: size.width * 0.035,
-                                    color: Colors.black87,
-                                  ),
-                                ),
+                              children: const [
+                                Icon(Icons.phone_in_talk, color: Colors.green, size: 16),
+                                SizedBox(width: 6),
+                                Text("0197777777",
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                               ],
                             ),
                           ],
@@ -187,101 +155,67 @@ class DetailComplaintsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: spacing),
+                const SizedBox(height: 20),
 
-                // TICKET INFORMATION
-                _buildHeaderLabel("TICKET INFORMATION", size),
+                _buildModernLabel("TICKET INFORMATION"),
                 _buildCleanBox(
-                  padding: EdgeInsets.zero,
                   child: Column(
                     children: [
+                      // --- Contact Person di dalam Ticket Info ---
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 26,
+                            backgroundColor: Colors.blue.shade50,
+                            child: const Icon(Icons.account_circle, color: Colors.blue, size: 30),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(name.toUpperCase(),
+                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                                Text(department.toUpperCase(),
+                                    style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: const [
+                                    Icon(Icons.phone_in_talk, color: Colors.green, size: 16),
+                                    SizedBox(width: 6),
+                                    Text("0197777777",
+                                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.all(size.width * 0.035),
+                        padding: const EdgeInsets.all(12),
                         color: Colors.grey[200],
                         child: Column(
-                          children: [
-                            Text(
-                              "INTERNET / WIRELESS",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.width * 0.035,
-                                color: Colors.blueGrey.shade900,
-                              ),
-                            ),
-                            SizedBox(height: spacing * 0.25),
-                            Text(
-                              "START DATE : 15 JAN 2026",
-                              style: TextStyle(
-                                fontSize: size.width * 0.032,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              "END DATE : 15 JAN 2026",
-                              style: TextStyle(
-                                fontSize: size.width * 0.032,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                          children: const [
+                            Text("INTERNET / WIRELESS",
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(size.width * 0.045),
-                        child: Text(
-                          "Wakil Aset RADIO: Encik Shukhaiman/Puan Azlina Zakaria mohon mengemaskini No.Invois & DO set komputer baharu pada Modul Perolehan (SPB) seterusnya melengkapkan rekod pengguna dan penempatan dan membuat janaan no. aset di Model Aset(SPB).",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            fontSize: size.width * 0.035,
-                            height: 1.5,
-                            color: Colors.black87,
-                          ),
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text("Can't access internet", style: TextStyle(fontSize: 13)),
                       ),
+                      _buildDropdownRow("TERMINAL :"),
+                      const SizedBox(height: 5),
+                      _buildDropdownRow("LOCATION :"),
                     ],
                   ),
                 ),
-                SizedBox(height: spacing * 1.2),
-
-                // LAPTOP SECTION
-                _buildCleanBox(
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.035,
-                          vertical: size.height * 0.012,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF00AEEF),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          "LAPTOP",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: size.width * 0.03,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: size.width * 0.03),
-                      Expanded(
-                        child: Text(
-                          "KKMM/BERNAMA/H/15/241",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: size.width * 0.035,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: size.height * 0.045),
+                const SizedBox(height: 30),
 
                 // BUTTON ACKNOWLEDGE
                 ElevatedButton(
@@ -289,43 +223,37 @@ class DetailComplaintsPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF00AEEF),
                     foregroundColor: Colors.white,
-                    minimumSize: Size(double.infinity, size.height * 0.07),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
+                    minimumSize: const Size(double.infinity, 55),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  child: Text(
-                    "ACKNOWLEDGE",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.width * 0.045,
-                    ),
-                  ),
+                  child: const Text("ACKNOWLEDGE",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
-                SizedBox(height: size.height * 0.03),
+                const SizedBox(height: 25),
               ],
             ),
           ),
 
-          // --- BOTTOM NAV BAR ---
+          // --- BOTTOM NAVIGATION ---
           _buildBottomNavigationBar(context),
         ],
       ),
     );
   }
 
-  // --- REFINED HELPERS ---
-  Widget _buildHeaderLabel(String text, Size size) {
+  Widget _buildModernLabel(String text) {
     return Padding(
-      padding: EdgeInsets.only(left: size.width * 0.012, bottom: size.height * 0.01),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: size.width * 0.033,
-          fontWeight: FontWeight.w900,
-          color: Colors.blueGrey.shade700,
-          letterSpacing: 0.8,
+      padding: const EdgeInsets.only(left: 5, bottom: 10),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: const Color(0xFF64748B),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(text,
+              style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -350,109 +278,66 @@ class DetailComplaintsPage extends StatelessWidget {
     );
   }
 
+  Widget _buildDropdownRow(String label) {
+    return Row(
+      children: [
+        Container(
+          width: 80,
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(color: Colors.grey[400], border: Border.all(color: Colors.grey)),
+          child: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(color: Colors.grey[400], border: Border.all(color: Colors.grey)),
+            child: const Text("- PLEASE SELECT -", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildBottomNavigationBar(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: size.height * 0.015),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade200)),
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.shade200))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(
-            context,
-            Icons.home_outlined,
-            "Home",
-            false,
-            size,
-            destination: const DashboardPage(),
-          ),
+          _buildNavItem(context, Icons.home_outlined, "Home", destination: const DashboardPage()),
           _buildQRItem(context),
-          _buildNavItem(
-            context,
-            Icons.list_alt_rounded,
-            "Options",
-            false,
-            size,
-            destination: null,
-          ),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options"),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(
-    BuildContext context,
-    IconData icon,
-    String label,
-    bool isActive, 
-    Size size,{
-    Widget? destination,
-  }) {
-    return GestureDetector(
+  Widget _buildNavItem(BuildContext context, IconData icon, String label, {Widget? destination}) {
+    return InkWell(
       onTap: () {
-        if (destination != null && !isActive) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => destination),
-          );
+        if (destination != null) {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => destination));
         }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: size.width * 0.07,
-            color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: size.width * 0.035,
-              color: isActive ? const Color(0xFF00AEEF) : Colors.grey,
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
+          Icon(icon, size: 28, color: Colors.grey),
+          Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
         ],
       ),
     );
   }
 
   Widget _buildQRItem(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final double radius = size.width * 0.07;
-    final double translationY = -radius * 0.2;
-
     return GestureDetector(
-      onTap: () async {
-        final String? qrResult = await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const QRScannerPage()),
-        );
-        if (qrResult != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Hasil Scan: $qrResult')),
-          );
-        }
-      },
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage())),
       child: Container(
-        transform: Matrix4.translationValues(0, translationY, 0),
-        padding: EdgeInsets.all(radius * 0.35),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: radius * 0.3,
-              offset: Offset(0, radius * 0.2),
-            ),
-          ],
-        ),
-        child: Icon(Icons.qr_code_scanner, color: Colors.white, size: radius * 0.75),
+        padding: const EdgeInsets.all(12),
+        decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
       ),
     );
   }

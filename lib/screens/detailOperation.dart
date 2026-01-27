@@ -3,12 +3,12 @@ import 'qr_scanner_page.dart';
 import 'dashboard_page.dart';
 import 'acknowledgeOperation.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailComplaintsPage extends StatelessWidget {
   final String status;
   final String name;
   final String department;
 
-  const DetailPage({
+  const DetailComplaintsPage({
     super.key,
     required this.status,
     required this.name,

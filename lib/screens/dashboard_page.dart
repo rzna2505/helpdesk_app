@@ -12,6 +12,12 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    final headerHeight = size.height * 0.32;
+    final minHeight = 120.0; // minimum height
+    final maxHeight = 300.0; // maximum height
+
+    final responsiveHeaderHeight = headerHeight.clamp(minHeight, maxHeight);
     final Width = size.width;
     final Height = size.height;
 
@@ -26,8 +32,15 @@ class DashboardPage extends StatelessWidget {
         children: [
           // ---------------- HEADER ----------------
               Container(
+                //height: headerHeight,
+                constraints: BoxConstraints(minHeight: size.height * 0.25,),
                 width: double.infinity,
-                padding: EdgeInsets.all(size.width * 0.05),
+                padding: EdgeInsets.fromLTRB(
+                  size.width * 0.05, 
+                  size.width * 0.05, 
+                  size.width * 0.05, 
+                  size.width * 0.02 // Kurangkan padding bawah sedikit
+                ),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Color(0xFF00AEEF), Color(0xFF0089BB)],
@@ -47,7 +60,8 @@ class DashboardPage extends StatelessWidget {
                       child: IconButton(
                         icon: Icon(Icons.logout, color: Colors.white, size: size.width * 0.07),
                         onPressed: () {
-                          // Tambah fungsi logout di sini
+                          // CALL LOGOUT FUNCTION
+                          _logout(context);
                         },
                       ),
                     ),
@@ -254,40 +268,49 @@ class DashboardPage extends StatelessWidget {
                               children: [
                                 _shiftCard(
                                   '14 Jan',
-                                  'Morning',
-                                  Colors.red,
+                                  [
+                                    {'name': 'Morning', 'color': Colors.red},
+                                    {'name': 'Afternoon', 'color': Colors.green},
+                                    {'name': 'Night', 'color': Colors.purple},
+                                  ],
                                   shiftRadius,
                                   size,
                                 ),
                                 const SizedBox(width: 12),
                                 _shiftCard(
                                   '15 Jan',
-                                  'Morning',
-                                  Colors.red,
+                                  [
+                                    {'name': 'Morning', 'color': Colors.red},
+                                    {'name': 'Afternoon', 'color': Colors.green},
+                                    {'name': 'Night', 'color': Colors.purple},
+                                  ],
                                   shiftRadius,
                                   size,
                                 ),
                                 const SizedBox(width: 12),
                                 _shiftCard(
                                   '16 Jan',
-                                  'Afternoon',
-                                  Colors.green,
+                                  [
+                                    {'name': 'Afternoon', 'color': Colors.green},
+                                  ],
                                   shiftRadius,
                                   size,
                                 ),
                                 const SizedBox(width: 12),
                                 _shiftCard(
                                   '17 Jan',
-                                  'Evening',
-                                  Colors.orange,
+                                  [
+                                    {'name': 'Evening', 'color': Colors.orange},
+                                  ],
                                   shiftRadius,
                                   size,
                                 ),
                                 const SizedBox(width: 12),
                                 _shiftCard(
                                   '18 Jan',
-                                  'Night',
-                                  Colors.purple,
+                                  [
+                                    {'name': 'Night', 'color': Colors.purple},
+                                  ],
                                   shiftRadius,
                                   size,
                                 ),
@@ -329,6 +352,34 @@ class DashboardPage extends StatelessWidget {
 
         ],
       ),
+    );
+  }
+
+  // LOGOUT FUNCTION
+  void _logout(BuildContext context) {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              }, 
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+                // Tambah fungsi logout di sini
+              }, 
+              child: const Text('Logout'),
+            ),
+          ],
+        );
+      }
     );
   }
 
@@ -396,55 +447,79 @@ class DashboardPage extends StatelessWidget {
   );
 }
 
-
+// SHFT CARD
   Widget _shiftCard(
-    String date,
-    String shift,
-    Color color,
-    double radius,
-    Size size,
-  ) {
+  String date,
+  //String shift,
+  //Color color,
+  List<Map<String, dynamic>> shifts, // List of shifts
+  double radius,
+  Size size,
+) {
 
-    final cardWidth = radius * 3.5; //kawal 
+  //double cardWidth = size.width * 0.42; //adjust card width based on screen size
+  double cardHeight = 180; //fixed height
 
-    return Container(
-      width: cardWidth,
-      padding: EdgeInsets.symmetric(vertical: radius * 0.9, horizontal: radius * 0.6),
-      decoration: BoxDecoration(
-        color: Colors.grey[200], // Sama macam OperationPage
-        borderRadius: BorderRadius.circular(radius * 0.8),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            date,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: radius * 0.55, fontWeight: FontWeight.bold),
+  // Gunakan peratusan lebar skrin, tapi letakkan limit (min/max)
+  double cardWidth = (size.width * 0.32).clamp(150.0, 200.0);
+
+  return Container(
+    width: cardWidth,
+    height: cardHeight,
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.08),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min, 
+      children: [
+        // DATE
+        Text(
+          date,
+          style: TextStyle(
+            fontSize: size.width * 0.04,
+            fontWeight: FontWeight.bold,
           ),
-          SizedBox(height: radius * 0.5),
+        ),
 
-          Container(
-            constraints: BoxConstraints(minWidth: radius * 2.2),
-            padding: EdgeInsets.symmetric(horizontal: radius * 0.6, vertical: radius * 0.45),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(radius),
-            ),
-            child: Text(
-              shift,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: radius * 0.45,
-                fontWeight: FontWeight.bold,
+        const SizedBox(height: 10),
+
+        // ===== PILL (IKUT TEKS) =====
+        Wrap(
+          alignment: WrapAlignment.center, //center pill
+          spacing: 6, // jarak antara pill
+          runSpacing: 4,
+          children: shifts.map((shift) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              decoration: ShapeDecoration(
+                color: shift['color'],
+                shape: const StadiumBorder(),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+              child: Text(
+                shift['name'],
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    ),
+  );
+}
+
 
   // ---------------- NAV ITEM RESPONSIVE ----------------
   Widget _buildNavItem(

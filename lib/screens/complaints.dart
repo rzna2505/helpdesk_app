@@ -29,14 +29,14 @@ class _ComplaintsState extends State<ComplaintsPage> {
         'desc': 'Can’t access internet',
         'color': Colors.redAccent,
       },
-      {
+      /*{
         'name': 'KAMAL AZUDIN BIN MD.YUSOF\nPENYIARAN (TV & RADIO)',
         'dept': '15th Floor - BERNAMA RADIO',
         'type': 'NOTEBOOK/LAPTOP/IPAD/MACBOOK',
         'status': 'PENDING',
         'desc': 'PC Hang',
         'color': Colors.orange,
-      },
+      },*/
     ];
     filteredData = allData;
   }
