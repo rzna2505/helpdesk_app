@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'detail_operation.dart';
-import 'dashboard_page.dart'; // Pastikan import dashboard ada
+import 'dashboard_page.dart';
 import 'qr_scanner_page.dart';
 
 class OperationPage extends StatefulWidget {
@@ -30,6 +30,7 @@ class _OperationPageState extends State<OperationPage> {
             'Wakil Aset RADIO KOMUNIKASI...Wakil Aset RADIO KOMUNIKASI...Wakil Aset RADIO KOMUNIKASI...',
         'color': Colors.redAccent,
       },
+      /*
       {
         'name': 'MOHD ISKANDAR',
         'dept': 'BAHAGIAN TEKNOLOGI MAKLUMAT & KOMUNIKASI',
@@ -38,7 +39,7 @@ class _OperationPageState extends State<OperationPage> {
         'desc':
             'Installation Aurora Protect Software...Installation Aurora Protect Software...',
         'color': Colors.orange,
-      },
+      },*/
     ];
     filteredData = allData;
   }
@@ -335,8 +336,8 @@ class _OperationPageState extends State<OperationPage> {
     BuildContext context,
     IconData icon,
     String label,
-    bool isActive, 
-    Size size,{
+    bool isActive,
+    Size size, {
     Widget? destination,
   }) {
     //final double iconSize = size.width * 0.07; //responsive icon size
@@ -378,7 +379,7 @@ class _OperationPageState extends State<OperationPage> {
 
     // Base size for circle and icon
     final double radius = size.width * 0.07; //responsive size
-    //final double iconSize = radius * 0.8; 
+    //final double iconSize = radius * 0.8;
     //final double padding = radius * 0.5;
     final double translationY = -radius * 0.2; //transform radius
 
@@ -409,7 +410,11 @@ class _OperationPageState extends State<OperationPage> {
             ),
           ],
         ),
-        child: Icon(Icons.qr_code_scanner, color: Colors.white, size: radius * 0.75),
+        child: Icon(
+          Icons.qr_code_scanner,
+          color: Colors.white,
+          size: radius * 0.75,
+        ),
       ),
     );
   }
