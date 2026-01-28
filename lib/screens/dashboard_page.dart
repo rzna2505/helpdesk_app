@@ -493,7 +493,7 @@ class DashboardPage extends StatelessWidget {
     double cardHeight = 180; //fixed height
 
     // Gunakan peratusan lebar skrin, tapi letakkan limit (min/max)
-    double cardWidth = (size.width * 0.32).clamp(150.0, 200.0);
+    double cardWidth = (size.width * 0.12).clamp(150.0, 200.0);
 
     return Container(
       width: cardWidth,

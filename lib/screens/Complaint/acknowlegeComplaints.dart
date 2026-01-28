@@ -6,17 +6,43 @@ import 'package:helpdesk_app/screens/Complaint/detailComplaintsPage.dart';
 import '../qr_scanner_page.dart';
 import '../dashboard_page.dart';
 
-class Acknowlegecomplaints extends StatelessWidget {
+class Acknowlegecomplaints extends StatefulWidget {
   final String status;
   final String name;
   final String department;
+  final String? terminal;
+  final String? location;
 
   const Acknowlegecomplaints({
     super.key,
     required this.status,
     required this.name,
     required this.department,
+    this.terminal,
+    this.location,
   });
+
+  @override
+  State<Acknowlegecomplaints> createState() => _AcknowlegecomplaintsState();
+}
+
+class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
+  String? selectedTerminal;
+  String? selectedLocation;
+
+  final List<String> terminalOptions = [
+    'Terminal A',
+    'Terminal B',
+    'Terminal C',
+  ];
+
+  final List<String> locationOptions = ['Level 1', 'Level 2', 'Level 3'];
+
+  void initState() {
+    super.initState();
+    selectedTerminal = widget.terminal;
+    selectedLocation = widget.location;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +123,14 @@ class Acknowlegecomplaints extends StatelessWidget {
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: status.toUpperCase() == 'NEW'
+                        color: widget.status.toUpperCase() == 'NEW'
                             ? Colors.redAccent
-                            : (status.toUpperCase() == 'PENDING'
+                            : (widget.status.toUpperCase() == 'PENDING'
                                   ? const Color.fromARGB(255, 243, 195, 72)
                                   : Colors.grey),
                       ),
                       child: Text(
-                        status.toUpperCase(),
+                        widget.status.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -151,14 +177,14 @@ class Acknowlegecomplaints extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name.toUpperCase(),
+                              widget.name.toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),
                             ),
                             Text(
-                              department.toUpperCase(),
+                              widget.department.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 12,
@@ -214,9 +240,28 @@ class Acknowlegecomplaints extends StatelessWidget {
                           style: TextStyle(fontSize: 13),
                         ),
                       ),
-                      _buildDropdownRow("TERMINAL :"),
+                      _buildDropdownRow(
+                        label: "TERMINAL :",
+                        selectedValue: selectedTerminal,
+                        options: terminalOptions,
+                        onChanged: (val) {
+                          setState(() {
+                            selectedTerminal = val;
+                          });
+                        },
+                      ),
                       const SizedBox(height: 5),
-                      _buildDropdownRow("LOCATION :"),
+
+                      _buildDropdownRow(
+                        label: "LOCATION :",
+                        selectedValue: selectedLocation,
+                        options: locationOptions,
+                        onChanged: (val) {
+                          setState(() {
+                            selectedLocation = val;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -236,7 +281,7 @@ class Acknowlegecomplaints extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    CommentPage(status: status),
+                                    CommentPage(status: widget.status),
                               ),
                             );
                           },
@@ -326,7 +371,12 @@ class Acknowlegecomplaints extends StatelessWidget {
     );
   }
 
-  Widget _buildDropdownRow(String label) {
+  Widget _buildDropdownRow({
+    required String label,
+    required String? selectedValue,
+    required List<String> options,
+    required Function(String?) onChanged,
+  }) {
     return Row(
       children: [
         Container(

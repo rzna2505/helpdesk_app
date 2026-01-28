@@ -4,7 +4,7 @@ import 'package:helpdesk_app/screens/comment_page.dart';
 import '../qr_scanner_page.dart';
 import '../dashboard_page.dart';
 
-class DetailComplaintsPage extends StatelessWidget {
+class DetailComplaintsPage extends StatefulWidget {
   final String status;
   final String name;
   final String department;
@@ -17,6 +17,21 @@ class DetailComplaintsPage extends StatelessWidget {
   });
 
   @override
+  State<DetailComplaintsPage> createState() => _DetailComplaintsPageState();
+}
+
+class _DetailComplaintsPageState extends State<DetailComplaintsPage> {
+  String? selectedTerminal;
+  String? selectedLocation;
+
+  final List<String> terminalOptions = [
+    'Terminal A',
+    'Terminal B',
+    'Terminal C',
+  ];
+
+  final List<String> locationOptions = ['Level 1', 'Level 2', 'Level 3'];
+
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -97,14 +112,14 @@ class DetailComplaintsPage extends StatelessWidget {
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: status.toUpperCase() == 'NEW'
+                        color: widget.status.toUpperCase() == 'NEW'
                             ? Colors.redAccent
-                            : (status.toUpperCase() == 'PENDING'
+                            : (widget.status.toUpperCase() == 'PENDING'
                                   ? const Color.fromARGB(255, 243, 195, 72)
                                   : Colors.grey),
                       ),
                       child: Text(
-                        status.toUpperCase(),
+                        widget.status.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -152,14 +167,14 @@ class DetailComplaintsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name.toUpperCase(),
+                              widget.name.toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),
                             ),
                             Text(
-                              department.toUpperCase(),
+                              widget.department.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 12,
@@ -213,14 +228,14 @@ class DetailComplaintsPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  name.toUpperCase(),
+                                  widget.name.toUpperCase(),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),
                                 ),
                                 Text(
-                                  department.toUpperCase(),
+                                  widget.department.toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.grey[700],
                                     fontSize: 12,
@@ -274,9 +289,29 @@ class DetailComplaintsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 13),
                         ),
                       ),
-                      _buildDropdownRow("TERMINAL :"),
+                      _buildDropdownRow(
+                        label: "TERMINAL :",
+                        selectedValue: selectedTerminal,
+                        options: terminalOptions,
+                        onChanged: (val) {
+                          setState(() {
+                            selectedTerminal = val;
+                          });
+                        },
+                      ),
+
                       const SizedBox(height: 5),
-                      _buildDropdownRow("LOCATION :"),
+
+                      _buildDropdownRow(
+                        label: "LOCATION :",
+                        selectedValue: selectedLocation,
+                        options: locationOptions,
+                        onChanged: (val) {
+                          setState(() {
+                            selectedLocation = val;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -322,9 +357,13 @@ class DetailComplaintsPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Acknowlegecomplaints(
-                          status: status,
-                          name: name,
-                          department: department,
+                          status: widget.status,
+                          name: widget.name,
+                          department: widget.department,
+                          terminal:
+                              selectedTerminal, // Pass the selected terminal
+                          location:
+                              selectedLocation, // Pass the selected terminal and location
                         ),
                       ),
                     );
@@ -417,7 +456,7 @@ class DetailComplaintsPage extends StatelessWidget {
     );
   }*/
 
-  Widget _buildDropdownRow(String label) {
+  /*Widget _buildDropdownRow(String label) {
     return Row(
       children: [
         Container(
@@ -443,6 +482,57 @@ class DetailComplaintsPage extends StatelessWidget {
             child: const Text(
               "- PLEASE SELECT -",
               style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
+    );
+  }*/
+
+  Widget _buildDropdownRow({
+    required String label,
+    required String? selectedValue,
+    required List<String> options,
+    required Function(String?) onChanged,
+  }) {
+    return Row(
+      children: [
+        Container(
+          width: 80,
+          padding: const EdgeInsets.all(5),
+          //decoration: BoxDecoration(color: Colors.grey[400], border: Border.all(color: Colors.grey)),
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
+            decoration: BoxDecoration(
+              color: Colors.grey[350],
+              border: Border.all(color: Colors.grey),
+            ),
+            child: DropdownButton<String>(
+              value: selectedValue,
+              isExpanded: true,
+              underline: const SizedBox(),
+              items: options
+                  .map(
+                    (option) => DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(
+                        option,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              onChanged: onChanged,
             ),
           ),
         ),
