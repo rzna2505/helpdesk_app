@@ -187,7 +187,7 @@ class _ComplaintsState extends State<ComplaintsPage> {
                   "Options",
                   //false,
                   //size,
-                  destination: null,
+                  destination: const ListOptionsPage(),
                 ),
               ],
             ),
@@ -351,24 +351,33 @@ class _ComplaintsState extends State<ComplaintsPage> {
     );
   }*/
 
-  Widget _buildNavItem(BuildContext context, IconData icon, String label,
-      {Widget? destination}) {
+  Widget _buildNavItem(
+  BuildContext context,
+  IconData icon,
+  String label, {
+  Widget? destination,
+  }) {
     return InkWell(
       onTap: () {
+        debugPrint("$label tapped");
         if (destination != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => destination));
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
         }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 28, color: Colors.grey),
-          Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+          Text(label,
+              style: const TextStyle(fontSize: 11, color: Colors.grey)),
         ],
       ),
     );
   }
+
 
   Widget _buildQRItem(BuildContext context) {
     return GestureDetector(
