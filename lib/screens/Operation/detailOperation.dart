@@ -361,7 +361,6 @@ class DetailOperationPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
         border: Border(top: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
@@ -374,12 +373,7 @@ class DetailOperationPage extends StatelessWidget {
             destination: const DashboardPage(),
           ),
           _buildQRItem(context),
-          _buildNavItem(
-            context,
-            Icons.list_alt_rounded,
-            "Options",
-            destination: null,
-          ),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options"),
         ],
       ),
     );
@@ -393,20 +387,18 @@ class DetailOperationPage extends StatelessWidget {
   }) {
     return InkWell(
       onTap: () {
-        if (destination != null)
+        if (destination != null) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => destination),
           );
+        }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 28, color: Colors.grey),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 0.0070, color: Colors.grey),
-          ),
+          Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
         ],
       ),
     );
