@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:helpdesk_app/screens/ListOption.dart';
-=======
 import 'package:helpdesk_app/screens/inventory.dart';
->>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
 import '../qr_scanner_page.dart';
 import 'PMPage.dart';
 import '../dashboard_page.dart';
@@ -528,20 +525,30 @@ class _AcknowledgePMPageState extends State<AcknowledgePMPage> {
             destination: const DashboardPage(),
           ),
           _buildQRItem(context),
-          _buildNavItem(context, Icons.list_alt_rounded, "Options",
-              destination: const ListOptionsPage()),
+          _buildNavItem(
+            context,
+            Icons.list_alt_rounded,
+            "Options",
+            destination: const ListOptionsPage(),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(BuildContext context, IconData icon, String label,
-      {Widget? destination}) {
+  Widget _buildNavItem(
+    BuildContext context,
+    IconData icon,
+    String label, {
+    Widget? destination,
+  }) {
     return InkWell(
       onTap: () {
         if (destination != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => destination));
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
         }
       },
       child: Column(
@@ -556,14 +563,17 @@ class _AcknowledgePMPageState extends State<AcknowledgePMPage> {
 
   Widget _buildQRItem(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const QRScannerPage())),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const QRScannerPage()),
+      ),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: const BoxDecoration(
-            color: Colors.black, shape: BoxShape.circle),
-        child:
-            const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
       ),
     );
   }

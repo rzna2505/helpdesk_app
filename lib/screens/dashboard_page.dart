@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:helpdesk_app/screens/ListOption.dart';
-=======
 import 'package:helpdesk_app/screens/Login/login_page.dart';
->>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
 import 'package:helpdesk_app/screens/PM/PMPage.dart';
 import 'package:helpdesk_app/screens/Complaint/complaints.dart';
 import 'qr_scanner_page.dart';
@@ -345,8 +342,6 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
           ),
-
-          // ---------------- BOTTOM NAV ----------------
           // ---------------- BOTTOM NAV ----------------
           Container(
             padding: EdgeInsets.symmetric(vertical: size.height * 0.015),
@@ -435,7 +430,6 @@ class DashboardPage extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Column(
-        // <--- Buang SizedBox(width: itemWidth)
         mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
@@ -491,10 +485,10 @@ class DashboardPage extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            maxLines: 1, // <--- Guna 1 line supaya tak makan ruang bawah
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: radius * 0.4, // Kecilkan sikit font
+              fontSize: radius * 0.4,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
@@ -510,9 +504,11 @@ class DashboardPage extends StatelessWidget {
     double radius,
     Size size,
   ) {
+    const double fixedHeight = 175.0;
+
     return Container(
-      width: (size.width * 0.4), // <--- Lebarkan sikit supaya teks tak sempit
-      // BUANG height: cardHeight, <--- PADAM BARIS NI
+      width: (size.width * 0.4),
+      height: fixedHeight, // <--- Kunci tinggi di sini
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -526,7 +522,6 @@ class DashboardPage extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // <--- Wajib ada
         children: [
           Text(
             date,
@@ -536,30 +531,32 @@ class DashboardPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          // Ganti Wrap dengan Column supaya shift tersusun ke bawah dengan cantik
-          Column(
-            children: shifts.map((shift) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Container(
-                  width: double.infinity, // <--- Biar penuh lebar card
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  decoration: ShapeDecoration(
-                    color: shift['color'],
-                    shape: const StadiumBorder(),
-                  ),
-                  child: Text(
-                    shift['name'],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: shifts.map((shift) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: ShapeDecoration(
+                      color: shift['color'],
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Text(
+                      shift['name'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),
