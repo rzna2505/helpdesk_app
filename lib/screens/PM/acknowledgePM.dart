@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:helpdesk_app/screens/ListOption.dart';
-=======
 import 'package:helpdesk_app/screens/inventory.dart';
->>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
 import '../qr_scanner_page.dart';
 import 'PMPage.dart';
 import '../dashboard_page.dart';

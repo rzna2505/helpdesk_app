@@ -7,11 +7,13 @@ import '../qr_scanner_page.dart';
 class InventoryComplaintsPage extends StatelessWidget {
   final String name;
   final String department;
+  final String terminal;
 
   const InventoryComplaintsPage({
     super.key,
     required this.name,
     required this.department,
+    required this.terminal,
   });
   // Warna Tema
   static const Color primaryBlue = Color(0xFF00AEEF);
@@ -81,7 +83,7 @@ class InventoryComplaintsPage extends StatelessWidget {
                 _buildCleanBox(
                   child: Column(
                     children: [
-                      _buildDataRow("TERMINAL NUMBER ", "NB4108"),
+                      _buildDataRow("TERMINAL NUMBER ", terminal),
                       const Divider(height: 20, thickness: 0.5),
                       _buildDataRow("SPB (NEW)", "DEFAULTKKMM338"),
                       const Divider(height: 20, thickness: 0.5),

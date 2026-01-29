@@ -265,7 +265,8 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                                   MaterialPageRoute(
                                     builder: (context) => InventoryComplaintsPage(
                                       name: widget.name,
-                                      department: widget.department,
+                                      department: widget.department, 
+                                      terminal: selectedTerminal ?? "-",
                                     ),
                                   ),
                                 );
@@ -366,12 +367,19 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
       padding: const EdgeInsets.only(left: 5, bottom: 10),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: const Color(0xFF64748B),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
