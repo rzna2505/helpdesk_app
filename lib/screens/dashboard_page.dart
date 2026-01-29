@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:helpdesk_app/screens/ListOption.dart';
+=======
+import 'package:helpdesk_app/screens/Login/login_page.dart';
+>>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
 import 'package:helpdesk_app/screens/PM/PMPage.dart';
 import 'package:helpdesk_app/screens/Complaint/complaints.dart';
 import 'qr_scanner_page.dart';
-import 'dashboard_page.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Operation/operation.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -13,19 +15,9 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-    final headerHeight = size.height * 0.32;
-    final minHeight = 120.0; // minimum height
-    final maxHeight = 300.0; // maximum height
-
-    final responsiveHeaderHeight = headerHeight.clamp(minHeight, maxHeight);
-    final Width = size.width;
-    final Height = size.height;
-
-    //Scalling factors
+    final spacing = size.height * 0.02;
     final avatarRadius = size.width * 0.08;
     final shiftRadius = size.width * 0.065;
-    final spacing = size.height * 0.02;
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -33,14 +25,13 @@ class DashboardPage extends StatelessWidget {
         children: [
           // ---------------- HEADER ----------------
           Container(
-            //height: headerHeight,
             constraints: BoxConstraints(minHeight: size.height * 0.25),
             width: double.infinity,
             padding: EdgeInsets.fromLTRB(
               size.width * 0.05,
+              0, // Biarkan SafeArea urus padding atas
               size.width * 0.05,
-              size.width * 0.05,
-              size.width * 0.02, // Kurangkan padding bawah sedikit
+              size.width * 0.04,
             ),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -53,69 +44,68 @@ class DashboardPage extends StatelessWidget {
                 bottomRight: Radius.circular(30),
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                      size: size.width * 0.07,
-                    ),
-                    onPressed: () {
-                      // CALL LOGOUT FUNCTION
-                      _logout(context);
-                    },
-                  ),
-                ),
-                SizedBox(height: spacing),
-                Text(
-                  'HelpDesk',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: size.width * 0.07,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                SizedBox(height: spacing),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: avatarRadius,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                        size: avatarRadius,
-                      ),
-                    ),
-                    SizedBox(width: size.width * 0.03),
-                    Text(
-                      'Hi Syana, today you check in at \n11:49:25 AM',
-                      style: TextStyle(
+            child: SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.logout,
                         color: Colors.white,
-                        fontSize: size.width * 0.035,
+                        size: (size.width * 0.07).clamp(24.0, 32.0),
                       ),
+                      onPressed: () => _logout(context),
                     ),
-                  ],
-                ),
-                SizedBox(height: spacing * 0.5),
-                Text(
-                  'Thursday, 15 Jan',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: size.width * 0.05,
                   ),
-                ),
-                SizedBox(height: spacing * 0.05),
-              ],
+                  Text(
+                    'HelpDesk',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.width * 0.07,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  SizedBox(height: spacing),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: avatarRadius,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: avatarRadius,
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.03),
+                      Text(
+                        'Hi Syana, today you check in at \n11:49:25 AM',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 0.035,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: spacing),
+                  Text(
+                    'Thursday, 15 Jan',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: size.width * 0.05,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-
           // ---------------- MAIN CONTENT ----------------
           Expanded(
             child: SingleChildScrollView(
@@ -182,56 +172,62 @@ class DashboardPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: spacing * 0.5),
-                          Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            runSpacing: spacing,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              _taskItem(
-                                Icons.report,
-                                'Complaints',
-                                2,
-                                Colors.red,
-                                avatarRadius,
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ComplaintsPage(),
-                                    ),
-                                  );
-                                },
+                              Expanded(
+                                child: _taskItem(
+                                  Icons.report,
+                                  'Complaints',
+                                  2,
+                                  Colors.red,
+                                  avatarRadius,
+                                  () {
+                                    // Mesti ada Navigator.push di sini
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ComplaintsPage(),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                              _taskItem(
-                                Icons.print,
-                                'Operation',
-                                0,
-                                Colors.blue,
-                                avatarRadius,
-                                () {
-                                  // Navigate ke OperationPage
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const OperationPage(),
-                                    ),
-                                  );
-                                },
+                              Expanded(
+                                child: _taskItem(
+                                  Icons.business_center,
+                                  'Operation',
+                                  0,
+                                  Colors.blue,
+                                  avatarRadius,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OperationPage(),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                              _taskItem(
-                                Icons.settings,
-                                'PM',
-                                6,
-                                Colors.green,
-                                avatarRadius,
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PMPage(),
-                                    ),
-                                  );
-                                },
+                              Expanded(
+                                child: _taskItem(
+                                  Icons.settings,
+                                  'PM',
+                                  6,
+                                  Colors.green,
+                                  avatarRadius,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const PMPage(),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -351,6 +347,7 @@ class DashboardPage extends StatelessWidget {
           ),
 
           // ---------------- BOTTOM NAV ----------------
+          // ---------------- BOTTOM NAV ----------------
           Container(
             padding: EdgeInsets.symmetric(vertical: size.height * 0.015),
             decoration: BoxDecoration(
@@ -390,35 +387,42 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  // LOGOUT FUNCTION
-  void _logout(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Are you sure you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                // Tambah fungsi logout di sini
-              },
-              child: const Text('Logout'),
+  // --- REUSABLE WIDGETS ---
+
+  Widget _buildSectionContainer(Size size, String title, Widget content) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(size.width * 0.05),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
             ),
           ],
-        );
-      },
+        ),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: size.width * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            content,
+          ],
+        ),
+      ),
     );
   }
 
-  // ---------------- HELPER FUNCTIONS ----------------
   Widget _taskItem(
     IconData icon,
     String title,
@@ -429,77 +433,86 @@ class DashboardPage extends StatelessWidget {
   ) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: SizedBox(
-        width: radius * 3.2,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                CircleAvatar(
+      borderRadius: BorderRadius.circular(20),
+      child: Column(
+        // <--- Buang SizedBox(width: itemWidth)
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
                   radius: radius,
                   backgroundColor: color,
                   child: Icon(icon, color: Colors.white, size: radius),
                 ),
-                if (badge > 0)
-                  Positioned(
-                    top: -6,
-                    right: -6,
-                    child: Container(
-                      padding: EdgeInsets.all(radius * 0.18),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        '$badge',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: radius * 0.45,
-                          fontWeight: FontWeight.bold,
-                        ),
+              ),
+              if (badge > 0)
+                Positioned(
+                  top: -2,
+                  right: -2,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+                    ),
+                    child: Text(
+                      '$badge',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-              ],
+                ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            maxLines: 1, // <--- Guna 1 line supaya tak makan ruang bawah
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: radius * 0.4, // Kecilkan sikit font
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
-            SizedBox(height: radius * 0.35),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: radius * 0.5,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  // SHFT CARD
   Widget _shiftCard(
     String date,
-    //String shift,
-    //Color color,
-    List<Map<String, dynamic>> shifts, // List of shifts
+    List<Map<String, dynamic>> shifts,
     double radius,
     Size size,
   ) {
-    //double cardWidth = size.width * 0.42; //adjust card width based on screen size
-    double cardHeight = 180; //fixed height
-
-    // Gunakan peratusan lebar skrin, tapi letakkan limit (min/max)
-    double cardWidth = (size.width * 0.12).clamp(150.0, 200.0);
-
     return Container(
-      width: cardWidth,
-      height: cardHeight,
+      width: (size.width * 0.4), // <--- Lebarkan sikit supaya teks tak sempit
+      // BUANG height: cardHeight, <--- PADAM BARIS NI
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -513,9 +526,8 @@ class DashboardPage extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min, // <--- Wajib ada
         children: [
-          // DATE
           Text(
             date,
             style: TextStyle(
@@ -523,30 +535,27 @@ class DashboardPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 10),
-
-          // ===== PILL (IKUT TEKS) =====
-          Wrap(
-            alignment: WrapAlignment.center, //center pill
-            spacing: 6, // jarak antara pill
-            runSpacing: 4,
+          // Ganti Wrap dengan Column supaya shift tersusun ke bawah dengan cantik
+          Column(
             children: shifts.map((shift) {
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 6,
-                ),
-                decoration: ShapeDecoration(
-                  color: shift['color'],
-                  shape: const StadiumBorder(),
-                ),
-                child: Text(
-                  shift['name'],
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Container(
+                  width: double.infinity, // <--- Biar penuh lebar card
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  decoration: ShapeDecoration(
+                    color: shift['color'],
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Text(
+                    shift['name'],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               );
@@ -558,13 +567,19 @@ class DashboardPage extends StatelessWidget {
   }
 
   // ---------------- NAV ITEM RESPONSIVE ----------------
-  Widget _buildNavItem(BuildContext context, IconData icon, String label,
-      {Widget? destination}) {
+  Widget _buildNavItem(
+    BuildContext context,
+    IconData icon,
+    String label, {
+    Widget? destination,
+  }) {
     return InkWell(
       onTap: () {
         if (destination != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => destination));
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
         }
       },
       child: Column(
@@ -579,15 +594,52 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildQRItem(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const QRScannerPage())),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const QRScannerPage()),
+      ),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: const BoxDecoration(
-            color: Colors.black, shape: BoxShape.circle),
-        child:
-            const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 30),
       ),
     );
   }
+}
+
+// --- FUNGSI LOGOUT ---
+void _logout(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Logout'),
+      content: const Text('Are you sure you want to logout?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context), // Tutup dialog jika 'No'
+          child: const Text('No'),
+        ),
+        TextButton(
+          onPressed: () {
+            // 1. Tutup dialog dulu
+            Navigator.pop(context);
+
+            // 2. TERUS KE PAGE LOGIN (Ganti 'LoginPage' dengan nama class login anda)
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ), // <--- TUKAR SINI
+              (route) =>
+                  false, // Ini akan buang semua rekod page lama (clear stack)
+            );
+          },
+          child: const Text('Yes', style: TextStyle(color: Colors.red)),
+        ),
+      ],
+    ),
+  );
 }

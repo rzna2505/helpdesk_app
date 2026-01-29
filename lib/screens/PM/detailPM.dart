@@ -359,7 +359,6 @@ class DetailPM extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
         border: Border(top: BorderSide(color: Colors.grey.shade200)),
       ),
       child: Row(
@@ -372,12 +371,16 @@ class DetailPM extends StatelessWidget {
             destination: const DashboardPage(),
           ),
           _buildQRItem(context),
+<<<<<<< HEAD
           _buildNavItem(
             context,
             Icons.list_alt_rounded,
             "Options",
             destination: const ListOptionsPage(),
           ),
+=======
+          _buildNavItem(context, Icons.list_alt_rounded, "Options"),
+>>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
         ],
       ),
     );

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:helpdesk_app/screens/ListOption.dart';
+=======
+import 'package:helpdesk_app/screens/inventory.dart';
+>>>>>>> 81dc5eea56593f2e665a477aaad852a4e10b1ab8
 import '../qr_scanner_page.dart';
 import 'PMPage.dart';
 import '../dashboard_page.dart';
@@ -207,29 +211,72 @@ class _AcknowledgePMPageState extends State<AcknowledgePMPage> {
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(15),
-                        color: Colors.grey[200],
-                        child: const Column(
-                          children: [
-                            Text(
-                              "PM TYPE : COMPUTER SET",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                      Stack(
+                        // Stack mesti bungkus bahagian kelabu & icon
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(15),
+                            color: Colors.grey[200],
+                            child: const Column(
+                              children: [
+                                Text(
+                                  "PM TYPE : COMPUTER SET",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "END DATE : 28 JAN 2026",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // --- ICON INVENTORY ---
+                          Positioned(
+                            right: 10,
+                            top: 10,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InventoryPage(
+                                      name: widget.name, // Tambah 'widget.'
+                                      department:
+                                          widget.department, // Tambah 'widget.'
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.9),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: const Icon(
+                                  Icons.inventory_2_rounded,
+                                  color: Color(0xFF0089BB),
+                                  size: 22,
+                                ),
                               ),
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              "END DATE : 28 JAN 2026",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       const Padding(
                         padding: EdgeInsets.all(20),
@@ -420,49 +467,6 @@ class _AcknowledgePMPageState extends State<AcknowledgePMPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildTicketIdBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              color: widget.status.toUpperCase() == 'NEW'
-                  ? Colors.redAccent
-                  : Colors.amber,
-              child: Text(
-                widget.status.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Expanded(
-              child: Text(
-                '202601141050510002',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
