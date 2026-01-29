@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../dashboard_page.dart';
+import 'forgot_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +12,50 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool rememberMe = false;
   bool obscurePassword = true;
+
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _handleLogin() {
+    if (_idController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please enter your ID')));
+      return; // Berhenti sini, jangan cek password lagi
+    }
+
+    // 2. Cek kalau Password kosong
+    if (_passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your password')),
+      );
+      return; // Berhenti sini
+    }
+    if (_idController.text == "admin" && _passwordController.text == "1234") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const DashboardPage()),
+      );
+    } else {
+      _showErrorDialog();
+    }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login Error'),
+        content: const Text('Wrong ID or Password. Please try again.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Try Again'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +90,15 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
+                      controller: _idController,
                       decoration: InputDecoration(
                         hintText: 'ID',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
                       ),
                     ),
 
@@ -63,14 +111,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
+                      controller: _passwordController,
                       obscureText: obscurePassword,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             obscurePassword
@@ -105,7 +155,13 @@ class _LoginPageState extends State<LoginPage> {
                         //NAVIGATE TO FORGOT PAGE
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/forgot-password');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgotPasswordPage(),
+                              ), // Pastikan nama class dalam forgot_page.dart betul
+                            );
                           },
                           child: const Text('Forgot Password?'),
                         ),
@@ -125,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: _handleLogin,
                         child: const Text(
                           'LOG IN',
                           style: TextStyle(
@@ -147,17 +203,11 @@ class _LoginPageState extends State<LoginPage> {
               left: 10,
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/images/bernama_logo.webp',
-                    height: 50,
-                  ),
+                  Image.asset('assets/images/bernama_logo.webp', height: 50),
                   const SizedBox(width: 8),
                   const Text(
                     'Bernama',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
