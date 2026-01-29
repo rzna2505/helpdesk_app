@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 import 'package:helpdesk_app/screens/PM/PMPage.dart';
 import 'package:helpdesk_app/screens/Complaint/complaints.dart';
 import 'qr_scanner_page.dart';
@@ -379,6 +380,7 @@ class DashboardPage extends StatelessWidget {
                   "Options",
                   //false,
                   //size,
+                  destination: const ListOptionsPage(),
                 ),
               ],
             ),

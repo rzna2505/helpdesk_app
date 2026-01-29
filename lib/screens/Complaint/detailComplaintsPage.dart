@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helpdesk_app/screens/Complaint/acknowlegeComplaints.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 import 'package:helpdesk_app/screens/comment_page.dart';
 import '../qr_scanner_page.dart';
 import '../dashboard_page.dart';
@@ -556,7 +557,8 @@ class _DetailComplaintsPageState extends State<DetailComplaintsPage> {
           _buildNavItem(context, Icons.home_outlined, "Home",
               destination: const DashboardPage()),
           _buildQRItem(context),
-          _buildNavItem(context, Icons.list_alt_rounded, "Options"),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options",
+              destination: const ListOptionsPage()),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 import '../qr_scanner_page.dart';
 import '../dashboard_page.dart';
 import 'acknowledgePM.dart';
@@ -375,7 +376,7 @@ class DetailPM extends StatelessWidget {
             context,
             Icons.list_alt_rounded,
             "Options",
-            destination: null,
+            destination: const ListOptionsPage(),
           ),
         ],
       ),

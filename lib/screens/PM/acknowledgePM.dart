@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 import '../qr_scanner_page.dart';
 import 'PMPage.dart';
 import '../dashboard_page.dart';
@@ -523,7 +524,8 @@ class _AcknowledgePMPageState extends State<AcknowledgePMPage> {
             destination: const DashboardPage(),
           ),
           _buildQRItem(context),
-          _buildNavItem(context, Icons.list_alt_rounded, "Options", destination: null),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options",
+              destination: const ListOptionsPage()),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 import 'detailComplaintsPage.dart';
 import '../dashboard_page.dart'; // Pastikan import dashboard ada
 import '../qr_scanner_page.dart';
@@ -333,20 +334,22 @@ class _ComplaintsState extends State<ComplaintsPage> {
   }
 
   // --- HELPER NAV ITEM DENGAN NAVIGASI ---
-  Widget _buildBottomNavigationBar(BuildContext context) {
+  /*Widget _buildBottomNavigationBar(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.015),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(context, Icons.home_outlined, "Home",
               destination: const DashboardPage()),
           _buildQRItem(context),
-          _buildNavItem(context, Icons.list_alt_rounded, "Options"),
+          _buildNavItem(context, Icons.list_alt_rounded, "Options",
+              destination: const ListOptionsPage()),
         ],
       ),
     );
-  }
+  }*/
 
   Widget _buildNavItem(BuildContext context, IconData icon, String label,
       {Widget? destination}) {
