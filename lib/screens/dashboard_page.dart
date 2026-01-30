@@ -19,7 +19,7 @@ class DashboardPage extends StatelessWidget {
     final avatarRadius = size.width * 0.08;
 
     final Map<String, String> timetables = {
-      "Friday 30 Jan": "B,F,N",
+      "Friday 30 Jan": "MC",
       "Saturday 31 Jan": "O",
       "Sunday 01 Feb": "PH",
       "Monday 02 Feb": "PH",
