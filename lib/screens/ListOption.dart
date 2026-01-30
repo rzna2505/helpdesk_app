@@ -300,6 +300,7 @@ class _ListOptionsState extends State<ListOptionsPage> {
             ),
           ],
         ),
+        
         child: Column(
           children: [
             Padding(
@@ -360,13 +361,14 @@ class _ListOptionsState extends State<ListOptionsPage> {
               padding: const EdgeInsets.all(12),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey[50],
+                color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 textAlign: TextAlign.center,
                 description,
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 13,
                   color: Colors.black,
                   height: 1.4,
