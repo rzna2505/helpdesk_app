@@ -14,7 +14,7 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. SEMUA DATA & VARIABLE LETAK DI SINI (Sebelum return)
+    // SEMUA DATA & VARIABLE LETAK DI SINI (Sebelum return)
     final size = MediaQuery.of(context).size;
     final spacing = size.height * 0.02;
     final avatarRadius = size.width * 0.08;
@@ -446,7 +446,7 @@ class DashboardPage extends StatelessWidget {
             context,
             Icons.list_alt_rounded,
             "Options",
-            destination: null,
+            destination: const ListOptionsPage() ,
           ),
         ], // <-- tutup list children
       ),
@@ -461,11 +461,12 @@ class DashboardPage extends StatelessWidget {
   }) {
     return InkWell(
       onTap: () {
-        if (destination != null)
+        if (destination != null) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => destination),
           );
+        }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
