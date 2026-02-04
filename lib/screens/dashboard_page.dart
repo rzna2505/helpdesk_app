@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:helpdesk_app/screens/ListOption.dart';
 import 'package:helpdesk_app/screens/Login/login_page.dart';
@@ -13,222 +15,225 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SEMUA DATA & VARIABLE LETAK DI SINI (Sebelum return)
-    final size = MediaQuery.of(context).size;
-    final spacing = size.height * 0.02;
-    final avatarRadius = size.width * 0.08;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final size = Size(constraints.maxWidth, constraints.maxHeight);
+        // SEMUA DATA & VARIABLE LETAK DI SINI (Sebelum return)
+        final spacing = size.height * 0.02;
+        final avatarRadius = (size.width * 0.08).clamp(24.0, 40.0);
+        final fontSizeBase = (size.width * 0.04).clamp(12.0, 18.0); // Boleh guna untuk font lain jika perlu
 
-    final Map<String, String> timetables = {
-      "Friday 30 Jan": "MC",
-      "Saturday 31 Jan": "O",
-      "Sunday 01 Feb": "PH",
-      "Monday 02 Feb": "PH",
-      "Tuesday 03 Feb": "B,OA",
-    };
+        final Map<String, String> timetables = {
+          "Friday 30 Jan": "MC",
+          "Saturday 31 Jan": "O",
+          "Sunday 01 Feb": "PH",
+          "Monday 02 Feb": "PH",
+          "Tuesday 03 Feb": "B,OA",
+        };
 
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Column(
-        children: [
-          // ---------------- HEADER ----------------
-          Container(
-            constraints: BoxConstraints(minHeight: size.height * 0.25),
-            width: double.infinity,
-            padding: EdgeInsets.fromLTRB(
-              size.width * 0.05,
-              0,
-              size.width * 0.05,
-              size.width * 0.04,
-            ),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF00AEEF), Color(0xFF0089BB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: SafeArea(
-              bottom: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                        size: (size.width * 0.07).clamp(24.0, 32.0),
-                      ),
-                      onPressed: () => _logout(context),
-                    ),
+        return Scaffold(
+          backgroundColor: Colors.grey[100],
+          body: Column(
+            children: [
+              // ---------------- HEADER ----------------
+              Container(
+                constraints: BoxConstraints(minHeight: size.height * 0.2), // Kurangkan dari 0.25 untuk skrin tinggi
+                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(
+                  size.width * 0.05,
+                  0,
+                  size.width * 0.05,
+                  size.width * 0.04,
+                ),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF00AEEF), Color(0xFF0089BB)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  Text(
-                    'HelpDesk',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 0.07,
-                      fontWeight: FontWeight.w800,
-                    ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
-                  SizedBox(height: spacing),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      CircleAvatar(
-                        radius: avatarRadius,
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.person, color: Colors.black),
-                      ),
-                      SizedBox(width: size.width * 0.03),
-                      // Guna Flexible di sini
-                      Flexible(
-                        child: Text(
-                          'Hi Syana, today you check in at 11:49:25 AM',
-                          style: TextStyle(
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.logout,
                             color: Colors.white,
-                            fontSize: size.width * 0.035,
+                            size: (size.width * 0.07).clamp(24.0, 32.0),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                          onPressed: () => _logout(context),
+                        ),
+                      ),
+                      Text(
+                        'HelpDesk',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: (size.width * 0.07).clamp(20.0, 40.0),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      SizedBox(height: spacing),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: avatarRadius,
+                            backgroundColor: Colors.white,
+                            child: Icon(Icons.person, color: Colors.black),
+                          ),
+                          SizedBox(width: size.width * 0.03),
+                          Flexible(
+                            child: Text(
+                              'Hi Syana, today you check in at 11:49:25 AM',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: fontSizeBase, // Guna fontSizeBase di sini
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: spacing),
+                      Text(
+                        'Thursday, 15 Jan',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: (size.width * 0.05).clamp(14.0, 24.0),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: spacing),
-                  Text(
-                    'Thursday, 15 Jan',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.width * 0.05,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
 
-          // ---------------- MAIN CONTENT ----------------
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: spacing),
-              child: Column(
-                children: [
-                  // Floating Job Card
-                  _buildSectionContainer(
-                    size,
-                    "",
-                    Text(
-                      'You finished 0 job today. \nWork Harder!!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: size.width * 0.05,
-                        color: Colors.black,
+              // ---------------- MAIN CONTENT ----------------
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(top: spacing),
+                  child: Column(
+                    children: [
+                      // Floating Job Card
+                      _buildSectionContainer(
+                        size,
+                        "",
+                        Text(
+                          'You finished 0 job today. \nWork Harder!!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: (size.width * 0.05).clamp(14.0, 20.0),
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
 
-                  SizedBox(height: spacing),
+                      SizedBox(height: spacing),
 
-                  // TASK SECTION
-                  _buildSectionContainer(
-                    size,
-                    "TASK",
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: _taskItem(
-                            Icons.report,
-                            'Complaints',
-                            2,
-                            Colors.red,
-                            avatarRadius,
-                            () {
-                              // Mesti ada Navigator.push di sini
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ComplaintsPage(),
-                                ),
-                              );
-                            },
-                          ),
+                      // TASK SECTION
+                      _buildSectionContainer(
+                        size,
+                        "TASK",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: _taskItem(
+                                Icons.report,
+                                'Complaints',
+                                2,
+                                Colors.red,
+                                avatarRadius,
+                                () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const ComplaintsPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: _taskItem(
+                                Icons.business_center,
+                                'Operation',
+                                0,
+                                Colors.blue,
+                                avatarRadius,
+                                () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const OperationPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: _taskItem(
+                                Icons.settings,
+                                'PM',
+                                6,
+                                Colors.green,
+                                avatarRadius,
+                                () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const PMPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: _taskItem(
-                            Icons.business_center,
-                            'Operation',
-                            0,
-                            Colors.blue,
-                            avatarRadius,
-                            () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const OperationPage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: _taskItem(
-                            Icons.settings,
-                            'PM',
-                            6,
-                            Colors.green,
-                            avatarRadius,
-                            () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const PMPage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: spacing),
-
-                  // SHIFT SCHEDULE SECTION
-                  _buildSectionContainer(
-                    size,
-                    "SHIFT SCHEDULE",
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children: timetables.entries.map((entry) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 12),
-                            child: _shiftCard(entry.key, entry.value, size),
-                          );
-                        }).toList(),
                       ),
-                    ),
+
+                      SizedBox(height: spacing),
+
+                      // SHIFT SCHEDULE SECTION
+                      _buildSectionContainer(
+                        size,
+                        "SHIFT SCHEDULE",
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: timetables.entries.map((entry) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12),
+                                child: _shiftCard(entry.key, entry.value, size),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: spacing * 2),
+                    ],
                   ),
-                  SizedBox(height: spacing * 2),
-                ],
+                ),
               ),
-            ),
-          ),
 
-          // ---------------- BOTTOM NAV ----------------
-          _buildBottomNavigationBar(context),
-        ],
-      ),
+              // ---------------- BOTTOM NAV ----------------
+              _buildBottomNavigationBar(context, size), // Pass size untuk responsiviti
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -257,7 +262,7 @@ class DashboardPage extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: size.width * 0.045,
+                  fontSize: (size.width * 0.045).clamp(12.0, 20.0),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -279,8 +284,7 @@ class DashboardPage extends StatelessWidget {
     List<String> codes = shiftCodes.split(',');
 
     return Container(
-      width: (size.width * 0.38),
-      // Ganti height tetap kepada constraints supaya ia boleh memanjang jika perlu
+      width: (size.width * 0.38).clamp(120.0, 200.0), // Tambah clamp untuk width
       constraints: const BoxConstraints(minHeight: 180),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -296,24 +300,23 @@ class DashboardPage extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Ikut saiz kandungan
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             dayName,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: size.width * 0.035,
+              fontSize: (size.width * 0.035).clamp(10.0, 16.0),
             ),
           ),
           Text(
             dateNum,
             style: TextStyle(
-              fontSize: size.width * 0.032,
+              fontSize: (size.width * 0.032).clamp(10.0, 14.0),
               color: Colors.grey[800],
             ),
           ),
           const Divider(height: 18),
-          // Guna Column biasa, jangan guna ListView di sini untuk elak ralat height
           ...codes.map((code) {
             final info = ShiftHelper.getInfo(code.trim());
             return Container(
@@ -330,7 +333,7 @@ class DashboardPage extends StatelessWidget {
                 style: TextStyle(
                   color: info['font'],
                   fontWeight: FontWeight.bold,
-                  fontSize: 11,
+                fontSize: 11.0.clamp(10.0, 12.0),// Clamp untuk font tetap
                 ),
               ),
             );
@@ -403,7 +406,6 @@ class DashboardPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          // GUNAKAN FITTEDBOX supaya teks mengecil automatik jika ruang sempit
           SizedBox(
             width: radius * 3,
             child: FittedBox(
@@ -412,7 +414,7 @@ class DashboardPage extends StatelessWidget {
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: radius * 0.45,
+                  fontSize: (radius * 0.45).clamp(10.0, 16.0),
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -424,9 +426,9 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
+  Widget _buildBottomNavigationBar(BuildContext context, Size size) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.015), // Berdasarkan skrin
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
@@ -442,7 +444,6 @@ class DashboardPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildNavItem(
     BuildContext context,
