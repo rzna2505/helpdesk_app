@@ -445,7 +445,7 @@ class DashboardPage extends StatelessWidget {
             "Options",
             destination: const ListOptionsPage(),
           ),
-        ], // <-- tutup list children
+        ],
       ),
     );
   }
