@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:helpdesk_app/screens/dashboard_page.dart' show DashboardPage;
+import 'package:helpdesk_app/screens/dashboard_page.dart';
 import '../qr_scanner_page.dart';
-//import 'qr_scanner_page.dart';
-//import 'dashboard_page.dart';
+import 'package:helpdesk_app/screens/ListOption.dart';
 
 class InventoryComplaintsPage extends StatelessWidget {
   final String name;
@@ -15,7 +14,8 @@ class InventoryComplaintsPage extends StatelessWidget {
     required this.department,
     required this.terminal,
   });
-  // Warna Tema
+
+  // Warna Tema Konsisten
   static const Color primaryBlue = Color(0xFF00AEEF);
   static const Color secondaryBlue = Color(0xFF0089BB);
   static const Color labelGrey = Color(0xFF64748B);
@@ -24,6 +24,8 @@ class InventoryComplaintsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: backgroundLight,
       body: Column(
@@ -31,7 +33,7 @@ class InventoryComplaintsPage extends StatelessWidget {
           // --- HEADER SECTION ---
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 50, bottom: 25),
+            padding: EdgeInsets.only(top: size.height * 0.05, bottom: 25),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [primaryBlue, secondaryBlue],
@@ -59,13 +61,17 @@ class InventoryComplaintsPage extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.article_rounded, color: Colors.white, size: 32),
+                    Icon(
+                      Icons.inventory_2_rounded,
+                      color: Colors.white,
+                      size: 32,
+                    ),
                     SizedBox(width: 12),
                     Text(
                       'Inventory Details',
                       style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
@@ -77,32 +83,31 @@ class InventoryComplaintsPage extends StatelessWidget {
 
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               children: [
-                // --- TERMINAL & SPB SECTION ---
+                // --- TERMINAL INFO ---
                 _buildCleanBox(
                   child: Column(
                     children: [
-                      _buildDataRow("TERMINAL NUMBER ", "NB0292"),
-                      const Divider(height: 20, thickness: 0.5),
-                      _buildDataRow("SPB (NEW)", "DEFAULTKKMM338"),
-                      const Divider(height: 20, thickness: 0.5),
-                      _buildDataRow("SPA (OLD)", "DEFAULTKKMM338"),
+                      _buildDataRow("TERMINAL NUMBER", terminal),
+                      const Divider(height: 20),
+                      _buildDataRow("ASSET ID", "NB-0292-2026"),
+                      _buildDataRow("SPB NUMBER", "DEFAULTKKMM338"),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
-                _buildModernLabel("CONTACT PERSON"),
+                _buildModernLabel("USER INFORMATION"),
                 _buildCleanBox(
                   child: Row(
                     children: [
                       CircleAvatar(
                         radius: 26,
                         backgroundColor: Colors.blue.shade50,
-                        child: Icon(
+                        child: const Icon(
                           Icons.person,
-                          color: Colors.blue.shade700,
+                          color: primaryBlue,
                           size: 30,
                         ),
                       ),
@@ -112,34 +117,33 @@ class InventoryComplaintsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name,
+                              name.toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),
                             ),
-                            const SizedBox(height: 4),
                             Text(
-                              department,
+                              department.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 12,
+                                fontSize: 11,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 5),
                             const Row(
                               children: [
                                 Icon(
-                                  Icons.phone_rounded,
-                                  size: 16,
+                                  Icons.phone,
+                                  size: 14,
                                   color: Colors.green,
                                 ),
-                                SizedBox(width: 6),
+                                SizedBox(width: 5),
                                 Text(
                                   "019-777 7777",
                                   style: TextStyle(
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 13,
                                   ),
                                 ),
                               ],
@@ -150,61 +154,28 @@ class InventoryComplaintsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
-                _buildModernLabel("NETWORK & SYSTEM"),
-                _buildCleanBox(
-                  child: Column(
-                    children: [
-                      _buildDataRow("IP Address", "WIFI - GUEST"),
-                      const SizedBox(height: 12),
-                      _buildDataRow("Remarks", "POBER1225/01139"),
-                      const Divider(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Icon(
-                            Icons.calendar_today_rounded,
-                            size: 12,
-                            color: labelGrey,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            "Tarikh Terima : 12/01/2026",
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade700,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                _buildModernLabel("ASSET SPECIFICATION"),
+                _buildModernLabel("SPECIFICATION"),
                 _buildCleanBox(
                   padding: EdgeInsets.zero,
                   child: Column(
                     children: [
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
-                          color: primaryBlue.withOpacity(0.05),
+                          color: Colors.blue.withOpacity(0.1),
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(15),
                             topRight: Radius.circular(15),
                           ),
                         ),
                         child: const Text(
-                          "HP PROBOOK 4 G11 14 INCI AI PC",
+                          "HP PROBOOK 440 G11 AI PC",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
                             color: secondaryBlue,
                           ),
                         ),
@@ -213,129 +184,94 @@ class InventoryComplaintsPage extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
-                            _buildDataRow("Category", "NOTEBOOK/LAPTOP"),
-                            _buildDataRow("Brand", "HP (Hewlett-Packard)"),
-                            _buildDataRow("Company", "FUTURE MAKERS SDN BHD"),
+                            _buildDataRow("Category", "LAPTOP / NOTEBOOK"),
                             _buildDataRow("Serial No", "5CD54107FD"),
-                            _buildDataRow("Asset Tag", "DEFAULTKKMM338"),
+                            _buildDataRow("Brand", "HP"),
+                            _buildDataRow("Operating System", "Windows 11 Pro"),
+                            _buildDataRow("RAM / Storage", "16GB / 512GB SSD"),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
-                _buildModernLabel("SOFTWARE"),
+                _buildModernLabel("SOFTWARE & LICENSE"),
                 _buildCleanBox(
-                  padding: EdgeInsets.zero,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        title: Text(
-                          "Microsoft Office LTSC Standard 2024",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: textDark,
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.verified_user,
+                            color: Colors.green,
+                            size: 20,
                           ),
-                        ),
-                        subtitle: Padding(
-                          padding: EdgeInsets.only(top: 4),
-                          child: Text(
-                            "7RYVY-CNR43-84TWF-RFKCM-39RPW",
+                          SizedBox(width: 10),
+                          Text(
+                            "Microsoft Office 2024 LTSC",
                             style: TextStyle(
-                              fontSize: 12,
-                              color: labelGrey,
-                              fontFamily: 'monospace',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
                           ),
-                        ),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.green,
-                          radius: 12,
-                          child: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                        ),
+                        ],
                       ),
+                      const SizedBox(height: 8),
                       Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 16,
-                        ),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
-                          ),
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Row(
-                          children: [
-                            Icon(
-                              Icons.history_rounded,
-                              size: 12,
-                              color: labelGrey,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              "Updated: 2026-01-14 09:46:36",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: labelGrey,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                        child: const Text(
+                          "LICENSE KEY: 7RYVY-CNR43-84TWF-RFKCM-39RPW",
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            fontSize: 11,
+                            color: labelGrey,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
               ],
             ),
           ),
+
+          // --- BOTTOM NAV BAR ---
           _buildBottomNavigationBar(context),
         ],
       ),
     );
   }
 
-  // --- WIDGET HELPERS (Pindahkan semua ke dalam class) ---
+  // --- REUSABLE WIDGETS ---
 
   Widget _buildDataRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: const TextStyle(
               color: labelGrey,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
-              fontSize: 13,
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              value,
-              textAlign: TextAlign.end,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
-                color: textDark,
-              ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: textDark,
             ),
           ),
         ],
@@ -345,22 +281,19 @@ class InventoryComplaintsPage extends StatelessWidget {
 
   Widget _buildModernLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.only(left: 5, bottom: 10),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: labelGrey,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: labelGrey,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -375,8 +308,8 @@ class InventoryComplaintsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 16,
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
@@ -406,7 +339,7 @@ class InventoryComplaintsPage extends StatelessWidget {
             context,
             Icons.list_alt_rounded,
             "Options",
-            destination: null,
+            destination: const ListOptionsPage(),
           ),
         ],
       ),
