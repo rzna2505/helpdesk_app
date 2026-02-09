@@ -24,17 +24,18 @@ class _ComplaintsState extends State<ComplaintsPage> {
   }
 
   void loadData() {
-    // Simulasi data dari task-complaint pending.txt
     var rawJson = [
       {
         "id": 6982,
         "task_id": "H202601300955310037",
+        "task_type": "H",
         "problem_detail": "PRINTER PROBLEM\r\n\r\nintest: mubin",
         "ticket_status": "PENDING",
         "name": "WAN NOR AZRIYANA BINTI WAN ALI",
         "terminal_id": "2342",
         "description": "<b>PRINTER / SCANNER</b>",
         "location": "11th Floor",
+        "unit": "UNIT PENGURUSAN PENGETAHUAN",
       },
       /*{
         "id": 6983,
@@ -57,7 +58,7 @@ class _ComplaintsState extends State<ComplaintsPage> {
   Color _getStatusColor(String status) {
     switch (status.toUpperCase()) {
       case 'NEW':
-        return Colors.redAccent;
+        return const Color(0xFFB73C3C);
       case 'PENDING':
         return Colors.orange;
       case 'COMPLETED':
@@ -176,7 +177,11 @@ class _ComplaintsState extends State<ComplaintsPage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 15),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
             ],
           ),
           child: Column(
@@ -199,21 +204,53 @@ class _ComplaintsState extends State<ComplaintsPage> {
                   ],
                 ),
               ),
-              ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  child: const Icon(Icons.person, color: Colors.grey),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 5,
                 ),
-                title: Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
-                subtitle: Text(
-                  item.location,
-                  style: const TextStyle(fontSize: 10),
+                child: Row(
+                  children: [
+                    // Avatar Pemohon
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundColor: Colors.grey[200],
+                      child: const Icon(
+                        Icons.person_rounded,
+                        color: Colors.grey,
+                        size: 35,
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+
+                    // Maklumat Teks Pemohon
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // NAMA
+                          Text(
+                            item.name.toUpperCase(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+
+                          // LOKASI
+                          Text(
+                            item.location.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Container(

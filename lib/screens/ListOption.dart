@@ -253,6 +253,7 @@ class _ListOptionsState extends State<ListOptionsPage> {
                               category: item['type'],
                               problemDetail: item['desc'],
                               terminalId: "NB-0292",
+                              unit: "UNIT 1",
                             );
 
                             Navigator.push(

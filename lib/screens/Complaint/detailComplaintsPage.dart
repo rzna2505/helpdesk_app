@@ -29,8 +29,17 @@ class _DetailComplaintsPageState extends State<DetailComplaintsPage> {
     'Level 2',
     'Level 3',
     '11th Floor',
-    '15th Floor',
   ];
+  @override
+  void initState() {
+    if (terminalOptions.contains(widget.complaint.terminalId)) {
+      selectedTerminal = widget.complaint.terminalId;
+    }
+
+    if (locationOptions.contains(widget.complaint.location)) {
+      selectedLocation = widget.complaint.location;
+    }
+  }
 
   // Fungsi pembantu untuk dapatkan warna secara dinamik
   Color _getStatusColor(String status) {
@@ -138,7 +147,7 @@ class _DetailComplaintsPageState extends State<DetailComplaintsPage> {
             ),
           ),
 
-          // --- CONTENT ---
+          // CONTENT
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20),
@@ -227,30 +236,22 @@ class _DetailComplaintsPageState extends State<DetailComplaintsPage> {
 
                       // DROPBOWN UNTUK TERMINAL & LOKASI
                       // --- DROPBOWN UNTUK TERMINAL ---
+                      // --- DROPBOWN UNTUK TERMINAL ---
                       _buildDropdownRow(
                         label: "TERMINAL :",
                         selectedValue:
-                            terminalOptions.contains(selectedTerminal)
-                            ? selectedTerminal
-                            : (terminalOptions.contains(complaint.terminalId)
-                                  ? complaint.terminalId
-                                  : null),
+                            selectedTerminal, // Guna variable yang kita dah set dlm initState
                         options: terminalOptions,
                         onChanged: (val) =>
                             setState(() => selectedTerminal = val),
                       ),
-
                       const SizedBox(height: 5),
 
                       // --- DROPBOWN UNTUK LOCATION ---
                       _buildDropdownRow(
                         label: "LOCATION :",
                         selectedValue:
-                            locationOptions.contains(selectedLocation)
-                            ? selectedLocation
-                            : (locationOptions.contains(complaint.location)
-                                  ? complaint.location
-                                  : null),
+                            selectedLocation, // Guna variable yang kita dah set dlm initState
                         options: locationOptions,
                         onChanged: (val) =>
                             setState(() => selectedLocation = val),
