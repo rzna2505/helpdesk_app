@@ -249,17 +249,21 @@ class _ListOptionsState extends State<ListOptionsPage> {
                                   "REQ-${item['status'] == 'NEW' ? '2026001' : '2026002'}",
                               status: item['status'],
                               name: item['name'].toString().split('\n')[0],
-                              location: item['dept'],
-                              category: item['type'],
-                              problemDetail: item['desc'],
+                              department: item['dept'] ?? "",
                               terminalId: "NB-0292",
-                              unit: "UNIT 1",
+                              location: item['dept'] ?? "",
+                              category: item['type'] ?? "UNKNOWN",
+                              problemDetail: item['desc'] ?? "",
+                              units: "",
+                              hp: "",
+                              assignTo: [],
                             );
 
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (_) => DetailComplaintsPage(
+                                  //data: item,
                                   complaint: complaintObj,
                                 ),
                               ),

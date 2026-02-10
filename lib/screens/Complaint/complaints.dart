@@ -4,6 +4,8 @@ import 'detailComplaintsPage.dart';
 import '../dashboard_page.dart';
 import '../qr_scanner_page.dart';
 import 'package:helpdesk_app/screens/ListOption.dart';
+import 'package:helpdesk_app/screens/Complaint/acknowlegeComplaints.dart';
+import 'package:helpdesk_app/model/assign_to_model.dart';
 
 class ComplaintsPage extends StatefulWidget {
   const ComplaintsPage({super.key});
@@ -29,15 +31,20 @@ class _ComplaintsState extends State<ComplaintsPage> {
         "id": 6982,
         "task_id": "H202601300955310037",
         "task_type": "H",
-        "problem_detail": "PRINTER PROBLEM\r\n\r\nintest: mubin",
+        "problem_detail": "Printer Problem\r\n\r\nintest: mubin",
         "ticket_status": "PENDING",
         "name": "WAN NOR AZRIYANA BINTI WAN ALI",
-        "terminal_id": "2342",
+        "terminal_id": "2333",
         "description": "<b>PRINTER / SCANNER</b>",
         "location": "11th Floor",
-        "unit": "UNIT PENGURUSAN PENGETAHUAN",
+        "units": "UNIT PENGURUSAN PENGETAHUAN",
+        "hp": "014 2615580",
+        "assign_to": [
+          {"name": "SHARIFFUDDIN BIN ALI BASHA", "status": "PENDING"},
+          {"name": "MOHD NAZRIN BIN ABU HASSAN", "status": "NEW"},
+        ],
       },
-      /*{
+      {
         "id": 6983,
         "task_id": "H202601301020440099",
         "problem_detail": "Internet slow\r\n\r\nurgent",
@@ -46,7 +53,13 @@ class _ComplaintsState extends State<ComplaintsPage> {
         "terminal_id": "1010",
         "description": "<b>INTERNET / WIRELESS</b>",
         "location": "15th Floor",
-      },*/
+        "units": "UNIT TEKNOLOGI MAKLUMAT",
+        "hp": "019 1234567",
+        "assign_to": [
+          {"name": "SHARIFFUDDIN BIN ALI BASHA", "status": "NEW"},
+          {"name": "MOHD NAZRIN BIN ABU HASSAN", "status": "NEW"},
+        ],
+      },
     ];
 
     setState(() {
@@ -74,10 +87,7 @@ class _ComplaintsState extends State<ComplaintsPage> {
       backgroundColor: Colors.grey[100],
       body: Column(
         children: [
-          // --- HEADER & SEARCH ---
           _buildHeader(),
-
-          // --- LIST OF CARDS ---
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -87,9 +97,9 @@ class _ComplaintsState extends State<ComplaintsPage> {
               },
             ),
           ),
-          _buildBottomNavigationBar(context),
         ],
       ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
@@ -166,13 +176,39 @@ class _ComplaintsState extends State<ComplaintsPage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailComplaintsPage(complaint: item),
-          ),
-        ),
+        onTap: () {
+          String currentStatus = item.status.toUpperCase().trim();
+          // Cek jika ada sesiapa dalam senarai assignTo yang statusnya PENDING
+          bool isAnyPending =
+              item.assignTo?.any(
+                (a) => a.status.toUpperCase().trim() == 'PENDING',
+              ) ??
+              false;
+
+          if (isAnyPending || item.status.toUpperCase() == 'PENDING') {
+            // TERUS KE PAGE ACKNOWLEDGE
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Acknowlegecomplaints(
+                  complaint: item,
+                  terminal: item.terminalId,
+                  location: item.location,
+                ),
+              ),
+            );
+          } else {
+            // KE PAGE DETAIL (Untuk status NEW atau lain-lain)
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailComplaintsPage(complaint: item),
+              ),
+            );
+          }
+        },
         child: Container(
+          // ... rest of your code
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),

@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:helpdesk_app/model/complaints_model.dart';
 import 'package:helpdesk_app/screens/dashboard_page.dart';
 import '../qr_scanner_page.dart';
 import 'package:helpdesk_app/screens/ListOption.dart';
 
 class InventoryComplaintsPage extends StatelessWidget {
-  final String name;
-  final String department;
-  final String terminal;
+  final Complaint complaint;
 
-  const InventoryComplaintsPage({
-    super.key,
-    required this.name,
-    required this.department,
-    required this.terminal,
-  });
+  const InventoryComplaintsPage({super.key, required this.complaint});
 
   // Warna Tema Konsisten
   static const Color primaryBlue = Color(0xFF00AEEF);
@@ -89,7 +83,7 @@ class InventoryComplaintsPage extends StatelessWidget {
                 _buildCleanBox(
                   child: Column(
                     children: [
-                      _buildDataRow("TERMINAL NUMBER", terminal),
+                      _buildDataRow("TERMINAL NUMBER", complaint.terminalId),
                       const Divider(height: 20),
                       _buildDataRow("ASSET ID", "NB-0292-2026"),
                       _buildDataRow("SPB NUMBER", "DEFAULTKKMM338"),
@@ -117,31 +111,33 @@ class InventoryComplaintsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name.toUpperCase(),
+                              complaint.name.toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),
                             ),
                             Text(
-                              department.toUpperCase(),
+                              complaint.department.toUpperCase(),
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 11,
                               ),
                             ),
                             const SizedBox(height: 5),
-                            const Row(
+                            Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.phone,
                                   size: 14,
                                   color: Colors.green,
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
-                                  "019-777 7777",
-                                  style: TextStyle(
+                                  complaint.hp.isNotEmpty
+                                      ? complaint.hp
+                                      : "019-777 7777",
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -184,7 +180,7 @@ class InventoryComplaintsPage extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
-                            _buildDataRow("Category", "LAPTOP / NOTEBOOK"),
+                            _buildDataRow("Category", complaint.category),
                             _buildDataRow("Serial No", "5CD54107FD"),
                             _buildDataRow("Brand", "HP"),
                             _buildDataRow("Operating System", "Windows 11 Pro"),
@@ -226,9 +222,9 @@ class InventoryComplaintsPage extends StatelessWidget {
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text(
-                          "LICENSE KEY: 7RYVY-CNR43-84TWF-RFKCM-39RPW",
-                          style: TextStyle(
+                        child: Text(
+                          "LICENSE KEY: ${complaint.units.isNotEmpty ? complaint.units : '7RYVY-CNR43-84TWF-RFKCM-39RPW'}",
+                          style: const TextStyle(
                             fontFamily: 'monospace',
                             fontSize: 11,
                             color: labelGrey,
@@ -251,7 +247,6 @@ class InventoryComplaintsPage extends StatelessWidget {
   }
 
   // --- REUSABLE WIDGETS ---
-
   Widget _buildDataRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

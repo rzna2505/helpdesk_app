@@ -24,6 +24,7 @@ class Acknowlegecomplaints extends StatefulWidget {
 }
 
 class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
+  // Helper warna status
   Color _getStatusColor(String status) {
     status = status.toUpperCase();
     if (status == 'NEW') return Colors.redAccent;
@@ -37,10 +38,10 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
     final item = widget.complaint;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: const Color(0xFFF1F5F9),
       body: Column(
         children: [
-          // --- HEADER ---
+          // --- HEADER SECTION ---
           Container(
             width: double.infinity,
             padding: EdgeInsets.only(top: size.height * 0.05, bottom: 25),
@@ -61,7 +62,7 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: Colors.white,
-                      size: 30,
+                      size: 25,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -69,16 +70,12 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.white,
-                      size: 40,
-                    ),
+                    Icon(Icons.description, color: Colors.white, size: 35),
                     SizedBox(width: 10),
                     Text(
-                      'Acknowledge',
+                      'Details',
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -97,11 +94,8 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                  ),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 10),
                 ],
               ),
               child: ClipRRect(
@@ -110,10 +104,12 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 12,
+                        horizontal: 20,
+                        vertical: 15, // Adjusted for better look
                       ),
-                      color: _getStatusColor(item.status),
+                      decoration: BoxDecoration(
+                        color: _getStatusColor(item.status),
+                      ),
                       child: Text(
                         item.status.toUpperCase(),
                         style: const TextStyle(
@@ -124,7 +120,7 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                     ),
                     Expanded(
                       child: Text(
-                        item.taskId,
+                        "${item.taskId}",
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -134,9 +130,8 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
 
-          // --- CONTENT ---
+          // --- SCROLLABLE CONTENT ---
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20),
@@ -144,11 +139,16 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                 _buildModernLabel("CONTACT PERSON"),
                 _buildCleanBox(
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 26,
+                        radius: 28,
                         backgroundColor: Colors.blue.shade50,
-                        child: const Icon(Icons.person, color: Colors.blue),
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.blue,
+                          size: 28,
+                        ),
                       ),
                       const SizedBox(width: 15),
                       Expanded(
@@ -159,30 +159,44 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                               item.name.toUpperCase(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                                fontSize: 14,
+                                color: Color(0xFF1E293B),
                               ),
                             ),
-                            Text(
-                              item.location.toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 12,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Row(
+                            const SizedBox(height: 4),
+                            Row(
                               children: [
-                                Icon(
-                                  Icons.phone_rounded,
-                                  color: Colors.green,
-                                  size: 16,
+                                const Icon(
+                                  Icons.business,
+                                  size: 14,
+                                  color: Colors.grey,
                                 ),
-                                SizedBox(width: 6),
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    item.units.toUpperCase(),
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.phone,
+                                  size: 14,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 5),
                                 Text(
-                                  "0197777777",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
+                                  item.hp,
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ],
@@ -203,46 +217,63 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                         children: [
                           Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(14),
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: Colors.blueGrey.withOpacity(0.05),
+                              ),
                             ),
                             child: Column(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[350],
-                                    borderRadius: BorderRadius.circular(10),
+                                    color: const Color(
+                                      0xFF0EA5E9,
+                                    ).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
-                                    item.category,
-                                    textAlign: TextAlign.center,
+                                    item.category.toUpperCase(),
                                     style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
+                                      color: Color(0xFF0284C7),
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 10,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                  ),
+                                  child: Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                    color: Colors.blueGrey.withOpacity(0.1),
+                                  ),
+                                ),
                                 Text(
                                   item.problemDetail,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Color(0xFF1E293B),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           _buildInfoRow(
                             label: "TERMINAL :",
                             value: widget.terminal,
                           ),
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 8),
                           _buildInfoRow(
                             label: "LOCATION :",
                             value: widget.location,
@@ -254,22 +285,17 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                         top: 0,
                         child: IconButton(
                           icon: const Icon(
-                            Icons.inventory_2_rounded,
-                            color: Color(0xFF0089BB),
-                            size: 22,
+                            Icons.inventory_2_outlined,
+                            color: Color(0xFF0284C7),
+                            size: 20,
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InventoryComplaintsPage(
-                                  name: item.name,
-                                  department: item.location,
-                                  terminal: widget.terminal ?? "-",
-                                ),
-                              ),
-                            );
-                          },
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  InventoryComplaintsPage(complaint: item),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -284,7 +310,13 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: IconButton(
-                          icon: const Icon(Icons.chat_bubble_outline_rounded),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(
+                            Icons.chat_bubble_outline_rounded,
+                            color: Colors.blueGrey,
+                            size: 20,
+                          ),
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -294,35 +326,65 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
                           ),
                         ),
                       ),
-                      _buildTechnicalRow("NEW", "SHARIFFUDDIN BIN ALI BASHA"),
                       const SizedBox(height: 10),
-                      _buildTechnicalRow("NEW", "MOHD NAZRIN BIN ABU HASSAN"),
+                      if (item.assignTo.isEmpty)
+                        const Text(
+                          "No technician assigned",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        )
+                      else
+                        ...item.assignTo.map((assign) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: _buildTechnicalRow(
+                              assign.status
+                                  .toUpperCase(), // Ambil status dari JSON (PENDING/NEW)
+                              assign.name.toUpperCase(), // Ambil nama dari JSON
+                            ),
+                          );
+                        }).toList(),
                     ],
                   ),
                 ),
                 const SizedBox(height: 35),
 
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ComplaintsPage(),
+                // Button Finish
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF0EA5E9).withOpacity(0.3),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
                       ),
-                      (route) => false,
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00AEEF),
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    ],
                   ),
-                  child: const Text(
-                    "FINISH",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ComplaintsPage(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0EA5E9),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 60),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: const Text(
+                      "FINISH",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -335,22 +397,24 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
   }
 
   // --- HELPERS ---
-
   Widget _buildModernLabel(String text) {
     return Padding(
       padding: const EdgeInsets.only(left: 5, bottom: 10),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: const Color(0xFF64748B),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: const Color(0xFF64748B),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -375,23 +439,31 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
     return Row(
       children: [
         SizedBox(
-          width: 80,
+          width: 90,
           child: Text(
             label,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: Colors.blueGrey.shade700,
+            ),
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.grey[350],
-              borderRadius: BorderRadius.circular(4),
+              color: const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               value ?? "-",
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1E293B),
+              ),
             ),
           ),
         ),
@@ -400,14 +472,29 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
   }
 
   Widget _buildTechnicalRow(String tag, String name) {
+    // Tentukan warna berdasarkan status
+    Color statusColor;
+    if (tag == "NEW") {
+      statusColor = Colors.redAccent;
+    } else if (tag == "PENDING") {
+      statusColor = const Color.fromARGB(
+        255,
+        243,
+        195,
+        72,
+      ); // Warna kuning PENDING
+    } else {
+      statusColor = Colors.grey;
+    }
+
     return Row(
       children: [
         Container(
-          width: 70,
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          width: 75, // Besarkan sikit supaya muat teks PENDING
+          padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.redAccent,
-            borderRadius: BorderRadius.circular(4),
+            color: statusColor,
+            borderRadius: BorderRadius.circular(6),
           ),
           alignment: Alignment.center,
           child: Text(
@@ -419,19 +506,16 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(4),
+          child: Text(
+            name,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF334155),
             ),
-            child: Text(
-              name,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
-              overflow: TextOverflow.ellipsis,
-            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
@@ -474,11 +558,12 @@ class _AcknowlegecomplaintsState extends State<Acknowlegecomplaints> {
   }) {
     return InkWell(
       onTap: () {
-        if (destination != null)
+        if (destination != null) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => destination),
           );
+        }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
